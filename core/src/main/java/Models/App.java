@@ -19,7 +19,7 @@ public class App {
 
     private ArrayList<User> users = new ArrayList<>();
     private User currentUser;
-    private Game currentGame;
+
 
 
     public ArrayList<User> getUsers() {
@@ -32,14 +32,6 @@ public class App {
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
-    }
-
-    public Game getCurrentGame() {
-        return currentGame;
-    }
-
-    public void setCurrentGame(Game currentGame) {
-        this.currentGame = currentGame;
     }
 
 }

@@ -46,4 +46,5 @@ public class Main extends Game {
     public static void setBatch(SpriteBatch batch) {
         Main.batch = batch;
     }
+
 }

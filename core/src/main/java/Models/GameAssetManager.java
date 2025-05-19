@@ -1,9 +1,23 @@
 package Models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class GameAssetManager {
+
+
+    private final Animation<Texture> character1Animation = new Animation<>(
+        0.1f,
+        new Texture("Characters/1/idle1.png"),
+        new Texture("Characters/1/idle2.png"),
+        new Texture("Characters/1/idle3.png"),
+        new Texture("Characters/1/idle4.png"),
+        new Texture("Characters/1/idle5.png")
+    );
+
 
     private GameAssetManager() {
 
@@ -27,4 +41,7 @@ public class GameAssetManager {
         this.skin = skin;
     }
 
+    public Animation<Texture> getCharacter1Animation() {
+        return character1Animation;
+    }
 }
