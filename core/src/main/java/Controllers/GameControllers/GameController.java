@@ -6,13 +6,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class GameController {
     private GameLauncher view;
+    private OrthographicCamera camera;
 
     private PlayerController playerController;
     private WorldController worldController;
 
-    public void setView(GameLauncher view) {
+    public void setView(GameLauncher view, OrthographicCamera camera) {
         this.view = view;
-        this.playerController = new PlayerController(new Player());
+        this.playerController = new PlayerController(new Player(),camera);
         this.worldController = new WorldController(playerController);
 
     }

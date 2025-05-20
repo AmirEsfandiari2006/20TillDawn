@@ -6,40 +6,48 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class GameLauncher implements Screen, InputProcessor {
 
     private Stage stage;
     private GameController controller;
+    private OrthographicCamera camera;
 
     public GameLauncher(GameController gameController , Skin skin) {
             this.controller = gameController;
-            controller.setView(this);
+            camera = new OrthographicCamera();
+            controller.setView(this,camera);
     }
 
     @Override
     public void show() {
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new StretchViewport(Main.WORLD_WIDTH, Main.WORLD_HEIGHT,camera));
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
+
+        camera.zoom = 0.6f;
+        Main.getBatch().setProjectionMatrix(camera.combined);
+
         Main.getBatch().begin();
         controller.updateGame();
         Main.getBatch().end();
+
         stage.act(Math.min(delta, 1 / 30f));
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override

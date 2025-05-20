@@ -13,6 +13,9 @@ public class Main extends Game {
 
     private static SpriteBatch batch;
 
+    public static final int WORLD_WIDTH = 1980;
+    public static final int WORLD_HEIGHT = 1080;
+
     @Override
     public void create() {
         main = this;

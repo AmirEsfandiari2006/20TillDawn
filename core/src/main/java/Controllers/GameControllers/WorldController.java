@@ -1,6 +1,7 @@
 package Controllers.GameControllers;
 
 import com.Final.Main;
+
 import com.badlogic.gdx.graphics.Texture;
 
 public class WorldController {
@@ -15,7 +16,7 @@ public class WorldController {
     }
 
     public void update() {
-        Main.getBatch().draw(background, playerController.getPlayer().getX(), playerController.getPlayer().getY());
+        Main.getBatch().draw(background, 0, 0, Main.WORLD_WIDTH, Main.WORLD_HEIGHT);
     }
 
     public Texture getBackground() {
