@@ -20,4 +20,9 @@ public class CollisionRectangle {
         return x < rectangle.x + rectangle.width && y < rectangle.y + rectangle.height && x + width > rectangle.x && y + height > rectangle.y;
     }
 
+
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
 }

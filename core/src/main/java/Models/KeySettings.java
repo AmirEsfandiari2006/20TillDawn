@@ -8,7 +8,7 @@ public class KeySettings {
     public int moveDown = Input.Keys.S;
     public int moveLeft = Input.Keys.A;
     public int moveRight = Input.Keys.D;
-
+    public int shoot = Input.Buttons.LEFT;
 
     private static KeySettings instance;
 
@@ -22,5 +22,6 @@ public class KeySettings {
         }
         return instance;
     }
+
 
 }

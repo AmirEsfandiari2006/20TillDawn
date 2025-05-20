@@ -1,12 +1,15 @@
 package Views;
 
 import Controllers.GameControllers.GameController;
+import Models.KeySettings;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -27,14 +30,14 @@ public class GameLauncher implements Screen, InputProcessor {
     @Override
     public void show() {
         stage = new Stage(new StretchViewport(Main.WORLD_WIDTH, Main.WORLD_HEIGHT,camera));
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
 
-        camera.zoom = 0.6f;
+        camera.zoom = 0.5f;
         Main.getBatch().setProjectionMatrix(camera.combined);
 
         Main.getBatch().begin();
@@ -88,7 +91,9 @@ public class GameLauncher implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        controller.getBulletController().handleShoot(screenX, screenY);
+        if (button == KeySettings.getInstance().shoot) {
+            controller.getBulletController().handleWeaponShoot(screenX, screenY);
+        }
         return false;
     }
 

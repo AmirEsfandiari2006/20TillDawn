@@ -33,7 +33,7 @@ public class GameController {
         this.playerController = new PlayerController(player,camera);
         this.worldController = new WorldController(playerController);
         this.treeController = new TreeController();
-        this.bulletController = new BulletController();
+        this.bulletController = new BulletController(selectedWeapon,player,camera);
         this.weaponController = new WeaponController(this.selectedWeapon,player,camera);
     }
 

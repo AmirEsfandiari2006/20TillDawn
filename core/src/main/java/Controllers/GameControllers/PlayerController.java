@@ -36,9 +36,6 @@ public class PlayerController {
         animation.setPlayMode(Animation.PlayMode.LOOP);
     }
 
-    public Player getPlayer() {
-        return player;
-    }
 
     public void update() {
 
