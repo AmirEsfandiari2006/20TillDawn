@@ -18,6 +18,13 @@ public class GameAssetManager {
         new Texture("Characters/1/idle5.png")
     );
 
+    private final Animation<Texture> treeAnimation = new Animation<>(
+        2f,
+        new Texture("Tree/tree1.png"),
+        new Texture("Tree/tree2.png"),
+        new Texture("Tree/tree3.png")
+        );
+
 
     private GameAssetManager() {
 
@@ -43,5 +50,9 @@ public class GameAssetManager {
 
     public Animation<Texture> getCharacter1Animation() {
         return character1Animation;
+    }
+
+    public Animation<Texture> getTreeAnimation() {
+        return treeAnimation;
     }
 }

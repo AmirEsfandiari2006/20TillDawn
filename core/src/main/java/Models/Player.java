@@ -1,8 +1,8 @@
 package Models;
 
 
+import Models.enums.CharacterType;
 import com.Final.Main;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -10,22 +10,25 @@ public class Player {
     private final Texture playerTexture = new Texture("Characters/1/idle1.png");
     private final Sprite playerSprite = new Sprite(playerTexture);
 
-    private int playerSpeed = 5;
-
+    private final CharacterType characterType;
+    private final Weapon weapon;
 
 
     private float time = 5;
-
-    private CollisionRectangle collisionRectangle;
+    private final CollisionRectangle collisionRectangle;
 
     private boolean isIdle = true;
     private boolean isRunning = false;
 
-    public Player() {
+    public Player(CharacterType selectedCharacter, Weapon selectedWeapon){
         playerSprite.setPosition((float) Main.WORLD_WIDTH /2,(float)Main.WORLD_HEIGHT/2);
         playerSprite.setSize(playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
-        this.collisionRectangle = new CollisionRectangle((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2 ,playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
+        this.collisionRectangle = new CollisionRectangle(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight());
+        this.characterType = selectedCharacter;
+        this.weapon = selectedWeapon;
     }
+
+
 
     public float getTime() {
         return time;
@@ -55,7 +58,6 @@ public class Player {
         return isRunning;
     }
 
-
     public void setIdle(boolean idle) {
         isIdle = idle;
     }
@@ -65,10 +67,14 @@ public class Player {
     }
 
     public int getPlayerSpeed() {
-        return playerSpeed;
+        return characterType.getSpeed();
     }
 
-    public void setPlayerSpeed(int playerSpeed) {
-        this.playerSpeed = playerSpeed;
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public CharacterType getCharacterType() {
+        return characterType;
     }
 }

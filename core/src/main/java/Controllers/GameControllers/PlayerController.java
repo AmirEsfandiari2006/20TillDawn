@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Vector3;
 
 public class PlayerController {
 
@@ -40,6 +41,8 @@ public class PlayerController {
     }
 
     public void update() {
+
+        updateMouseDirection();
         Main.getBatch().draw(player.getPlayerSprite(), player.getPlayerSprite().getX(), player.getPlayerSprite().getY());
 
         if(player.isIdle()){
@@ -96,5 +99,19 @@ public class PlayerController {
         player.getPlayerSprite().setX(newX);
         player.getPlayerSprite().setY(newY);
     }
+
+    private void updateMouseDirection() {
+        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(mousePos);
+
+        float playerCenterX = player.getPlayerSprite().getX() + player.getPlayerSprite().getWidth() / 2;
+
+        if (mousePos.x < playerCenterX && !player.getPlayerSprite().isFlipX()) {
+            player.getPlayerSprite().flip(true, false);
+        } else if (mousePos.x > playerCenterX && player.getPlayerSprite().isFlipX()) {
+            player.getPlayerSprite().flip(true, false);
+        }
+    }
+
 
 }

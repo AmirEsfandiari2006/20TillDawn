@@ -5,11 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Bullet {
 
-    private final Texture bulletTexture = new Texture("bullet.png");
-    private final Sprite bulletSprite = new Sprite(bulletTexture);
+    private final Sprite bulletSprite = new Sprite(new Texture("bullet.png"));
 
-    private float x,y;
-
-
-
+    public Bullet(int x, int y) {
+        bulletSprite.setPosition(x, y);
+    }
 }

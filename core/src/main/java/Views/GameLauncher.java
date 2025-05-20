@@ -88,6 +88,7 @@ public class GameLauncher implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        controller.getBulletController().handleShoot(screenX, screenY);
         return false;
     }
 
