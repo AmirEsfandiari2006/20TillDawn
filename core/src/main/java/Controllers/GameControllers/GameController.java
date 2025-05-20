@@ -28,20 +28,21 @@ public class GameController {
     }
 
     public void setView(GameLauncher view, OrthographicCamera camera) {
+        Player player = new Player(selectedCharacter,selectedWeapon);
         this.view = view;
-        this.playerController = new PlayerController(new Player(selectedCharacter,selectedWeapon),camera);
+        this.playerController = new PlayerController(player,camera);
         this.worldController = new WorldController(playerController);
         this.treeController = new TreeController();
         this.bulletController = new BulletController();
-        this.weaponController = new WeaponController(this.selectedWeapon);
+        this.weaponController = new WeaponController(this.selectedWeapon,player,camera);
     }
 
     public void updateGame() {
         worldController.update();
+        weaponController.update();
         playerController.update();
         treeController.update();
         bulletController.update();
-        weaponController.update();
     }
 
     public PlayerController getPlayerController() {
@@ -58,5 +59,9 @@ public class GameController {
 
     public int getSelectedTime() {
         return selectedTime;
+    }
+
+    public WeaponController getWeaponController() {
+        return weaponController;
     }
 }
