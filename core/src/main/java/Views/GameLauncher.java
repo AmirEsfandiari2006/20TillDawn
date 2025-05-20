@@ -4,12 +4,10 @@ import Controllers.GameControllers.GameController;
 import Models.KeySettings;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -18,8 +16,9 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 public class GameLauncher implements Screen, InputProcessor {
 
     private Stage stage;
-    private GameController controller;
-    private OrthographicCamera camera;
+    private final GameController controller;
+    private final OrthographicCamera camera;
+    private float elapsedTime = 0f;
 
     public GameLauncher(GameController gameController , Skin skin) {
             this.controller = gameController;
@@ -35,13 +34,16 @@ public class GameLauncher implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
+
+        elapsedTime += delta;
+
         ScreenUtils.clear(Color.BLACK);
 
         camera.zoom = 0.5f;
         Main.getBatch().setProjectionMatrix(camera.combined);
 
         Main.getBatch().begin();
-        controller.updateGame();
+        controller.updateGame(delta , elapsedTime);
         Main.getBatch().end();
 
         stage.act(Math.min(delta, 1 / 30f));

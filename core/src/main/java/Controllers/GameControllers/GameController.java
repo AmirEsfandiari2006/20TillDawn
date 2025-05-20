@@ -15,6 +15,7 @@ public class GameController {
     private TreeController treeController;
     private BulletController bulletController;
     private WeaponController weaponController;
+    private MonsterController monsterController;
 
     private final CharacterType selectedCharacter;
     private final Weapon selectedWeapon;
@@ -35,14 +36,16 @@ public class GameController {
         this.treeController = new TreeController();
         this.bulletController = new BulletController(selectedWeapon,player,camera);
         this.weaponController = new WeaponController(this.selectedWeapon,player,camera);
+        this.monsterController = new MonsterController(player);
     }
 
-    public void updateGame() {
+    public void updateGame(float deltaTime , float elapsedTime) {
         worldController.update();
         weaponController.update();
         playerController.update();
         treeController.update();
         bulletController.update();
+        monsterController.update(deltaTime,elapsedTime);
     }
 
     public PlayerController getPlayerController() {

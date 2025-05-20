@@ -25,6 +25,20 @@ public class GameAssetManager {
         new Texture("Tree/tree3.png")
         );
 
+    private final Animation<Texture> tentacleSpawnAnimation = new Animation<>(
+        0.1f,
+        new Texture("Monsters/Tentacle/Spawn/TentacleSpawn0.png"),
+        new Texture("Monsters/Tentacle/Spawn/TentacleSpawn1.png"),
+        new Texture("Monsters/Tentacle/Spawn/TentacleSpawn2.png")
+        );
+
+    private final Animation<Texture> tentacleMoveAnimation = new Animation<>(
+        0.1f,
+        new Texture("Monsters/Tentacle/Move/TentacleIdle0.png"),
+        new Texture("Monsters/Tentacle/Move/TentacleIdle1.png"),
+        new Texture("Monsters/Tentacle/Move/TentacleIdle2.png"),
+        new Texture("Monsters/Tentacle/Move/TentacleIdle3.png")
+        );
 
     private GameAssetManager() {
 
@@ -54,5 +68,13 @@ public class GameAssetManager {
 
     public Animation<Texture> getTreeAnimation() {
         return treeAnimation;
+    }
+
+    public Animation<Texture> getTentacleSpawnAnimation() {
+        return tentacleSpawnAnimation;
+    }
+
+    public Animation<Texture> getTentacleMoveAnimation() {
+        return tentacleMoveAnimation;
     }
 }
