@@ -29,6 +29,7 @@ public class Bullet {
         float newX = bulletSprite.getX() + dx * speed * deltaTime;
         float newY = bulletSprite.getY() + dy * speed * deltaTime;
         bulletSprite.setPosition(newX, newY);
+        collisionRectangle.setPosition(newX, newY);
     }
 
     public void draw(SpriteBatch batch) {

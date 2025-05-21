@@ -17,6 +17,9 @@ public class EyeBat implements Monster {
 
     private final Animation<TextureRegion> animation;
     private float animationTimer = 0f;
+    private float fireTimer = 0f;
+
+    private static final float FIRE_INTERVAL = 3f;
 
     private final CollisionRectangle collisionRect;
 
@@ -25,16 +28,15 @@ public class EyeBat implements Monster {
         this.y = y;
 
         animation = GameAssetManager.getInstance().getEyeBatAnimation();
-
         this.sprite = new Sprite(animation.getKeyFrame(0));
         this.sprite.setPosition(x, y);
-
         this.collisionRect = new CollisionRectangle(x, y, sprite.getWidth(), sprite.getHeight());
     }
 
     @Override
     public void update(float deltaTime, Player player) {
         animationTimer += deltaTime;
+        fireTimer += deltaTime;
 
         float dx = player.getPlayerSprite().getX() - x;
         float dy = player.getPlayerSprite().getY() - y;
@@ -44,35 +46,45 @@ public class EyeBat implements Monster {
         if (distance > 1f) {
             x += (dx / distance) * speed * deltaTime;
             y += (dy / distance) * speed * deltaTime;
-
             sprite.setPosition(x, y);
             collisionRect.setPosition(x, y);
         }
 
-        // Flip only when direction changes
+        // Use setFlip instead of flip to avoid toggling
         if (dx < 0 && facingRight) {
-            sprite.flip(true, false);
+            sprite.setFlip(true, false);
             facingRight = false;
         } else if (dx > 0 && !facingRight) {
-            sprite.flip(true, false);
+            sprite.setFlip(false, false);
             facingRight = true;
         }
     }
 
+    public MonsterBullet updateAndCheckFire(float deltaTime, Player player) {
+        if (fireTimer >= FIRE_INTERVAL) {
+            fireTimer = 0f;
+            return new MonsterBullet(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2,
+                player.getPlayerSprite().getX(),
+                player.getPlayerSprite().getY());
+        }
+        return null;
+    }
 
     @Override
     public void render(SpriteBatch batch) {
         TextureRegion currentFrame = animation.getKeyFrame(animationTimer, true);
 
-        if (!facingRight && !currentFrame.isFlipX()) {
+        // Flip the frame region according to facingRight
+        if (facingRight && currentFrame.isFlipX()) {
             currentFrame.flip(true, false);
-        } else if (facingRight && currentFrame.isFlipX()) {
+        } else if (!facingRight && !currentFrame.isFlipX()) {
             currentFrame.flip(true, false);
         }
 
         sprite.setRegion(currentFrame);
         sprite.draw(batch);
     }
+
     @Override
     public Sprite getSprite() {
         return sprite;

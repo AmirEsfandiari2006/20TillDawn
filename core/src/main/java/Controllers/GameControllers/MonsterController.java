@@ -2,6 +2,7 @@ package Controllers.GameControllers;
 
 import Models.Monsters.EyeBat;
 import Models.Monsters.Monster;
+import Models.Monsters.MonsterBullet;
 import Models.Monsters.Tentacle;
 import Models.Player;
 import com.Final.Main;
@@ -15,6 +16,7 @@ public class MonsterController {
     private final Random random = new Random();
     private final Player player;
     private final ArrayList<Monster> monsters;
+    private final ArrayList<MonsterBullet> monsterBullets;
     private final int gameTotalTime;
 
     private float tentacleTimer = 0f;
@@ -27,6 +29,7 @@ public class MonsterController {
         this.player = player;
         this.gameTotalTime = (gameTotalTime * 60);
         this.monsters = new ArrayList<>();
+        this.monsterBullets = new ArrayList<>();
     }
 
     public void update(float deltaTime, float elapsedTime) {
@@ -38,7 +41,7 @@ public class MonsterController {
 
         eyeBatTimer += deltaTime;
         if ((elapsedTime > ((float) gameTotalTime / 4)) && eyeBatTimer >= EYEBAT_SPAWN_TIME) {
-            for(int i = 0; i < (((4 * elapsedTime) - gameTotalTime + 30) / 30); i++){
+            for (int i = 0; i < (((4 * elapsedTime) - gameTotalTime + 30) / 30); i++) {
                 spawnEyeBat();
             }
             eyeBatTimer = 0f;
@@ -47,6 +50,18 @@ public class MonsterController {
         for (Monster monster : monsters) {
             monster.update(deltaTime, player);
             monster.render(Main.getBatch());
+
+            if (monster instanceof EyeBat) {
+                MonsterBullet bullet = ((EyeBat) monster).updateAndCheckFire(deltaTime, player);
+                if (bullet != null) {
+                    monsterBullets.add(bullet);
+                }
+            }
+        }
+
+        for (MonsterBullet bullet : monsterBullets) {
+            bullet.update(deltaTime);
+            bullet.render(Main.getBatch());
         }
     }
 
@@ -61,6 +76,4 @@ public class MonsterController {
         float y = random.nextFloat() * (Main.WORLD_HEIGHT - 50);
         monsters.add(new EyeBat(x, y));
     }
-
-
 }
