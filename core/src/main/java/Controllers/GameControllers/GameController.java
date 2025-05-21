@@ -16,10 +16,15 @@ public class GameController {
     private BulletController bulletController;
     private WeaponController weaponController;
     private MonsterController monsterController;
+    private BarController barController;
 
     private final CharacterType selectedCharacter;
     private final Weapon selectedWeapon;
     private final int selectedTime;
+
+
+    private int score;
+    private int kills;
 
 
     public GameController(CharacterType selectedCharacter,Weapon weapon, int selectedTime) {
@@ -37,6 +42,7 @@ public class GameController {
         this.bulletController = new BulletController(selectedWeapon,player,camera);
         this.weaponController = new WeaponController(this.selectedWeapon,player,camera);
         this.monsterController = new MonsterController(player,selectedTime);
+        this.barController = new BarController();
     }
 
     public void updateGame(float deltaTime , float elapsedTime) {
@@ -66,5 +72,21 @@ public class GameController {
 
     public WeaponController getWeaponController() {
         return weaponController;
+    }
+
+    public MonsterController getMonsterController() {
+        return monsterController;
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public BarController getBarController() {
+        return barController;
     }
 }

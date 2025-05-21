@@ -63,8 +63,13 @@ public class PlayerController {
         y = Math.max(cameraHalfHeight, y);
         y = Math.min(Main.WORLD_HEIGHT - cameraHalfHeight, y);
 
+        // Round the camera position to whole pixels to avoid jitter
+        x = Math.round(x);
+        y = Math.round(y);
+
         camera.position.set(x, y, 0);
         camera.update();
+        Main.getBatch().setProjectionMatrix(camera.combined);
     }
 
     public void handlePlayerInput() {

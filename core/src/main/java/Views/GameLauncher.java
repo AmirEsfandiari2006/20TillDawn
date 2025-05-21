@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.GameControllers.GameController;
+import Models.GameAssetManager;
 import Models.KeySettings;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -15,12 +17,18 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class GameLauncher implements Screen, InputProcessor {
 
+    private BitmapFont font;
+
+
+
     private Stage stage;
     private final GameController controller;
     private final OrthographicCamera camera;
     private float elapsedTime = 0f;
 
     public GameLauncher(GameController gameController , Skin skin) {
+            font = new BitmapFont(); // You can also load a custom .fnt file
+            font.setColor(Color.WHITE);
             this.controller = gameController;
             camera = new OrthographicCamera();
             controller.setView(this,camera);
@@ -28,26 +36,30 @@ public class GameLauncher implements Screen, InputProcessor {
 
     @Override
     public void show() {
-        stage = new Stage(new StretchViewport(Main.WORLD_WIDTH, Main.WORLD_HEIGHT,camera));
+        stage = new Stage(new StretchViewport(Main.WORLD_WIDTH, Main.WORLD_HEIGHT, camera));
         Gdx.input.setInputProcessor(this);
+
     }
+
 
     @Override
     public void render(float delta) {
-
         elapsedTime += delta;
 
         ScreenUtils.clear(Color.BLACK);
 
         camera.zoom = 0.5f;
-        Main.getBatch().setProjectionMatrix(camera.combined);
 
         Main.getBatch().begin();
-        controller.updateGame(delta , elapsedTime);
-        Main.getBatch().end();
 
-        stage.act(Math.min(delta, 1 / 30f));
-        stage.draw();
+        controller.updateGame(delta, elapsedTime); // draw world
+        controller.getBarController().render(Main.getBatch(), camera, controller.getScore(), controller.getKills());
+
+
+        float camX = (int)camera.position.x;
+        float camY = (int)camera.position.y;
+
+        Main.getBatch().end();
     }
 
     @Override
