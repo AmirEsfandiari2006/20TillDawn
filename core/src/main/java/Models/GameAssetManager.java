@@ -3,6 +3,7 @@ package Models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
@@ -40,6 +41,14 @@ public class GameAssetManager {
         new Texture("Monsters/Tentacle/Move/TentacleIdle3.png")
         );
 
+    private final Animation<TextureRegion> eyeBatAnimation = new Animation<>(
+        0.1f,
+        new TextureRegion(new Texture("Monsters/EyeBat/EyeBat0.png")),
+        new TextureRegion(new Texture("Monsters/EyeBat/EyeBat1.png")),
+        new TextureRegion(new Texture("Monsters/EyeBat/EyeBat2.png"))
+        );
+
+
     private GameAssetManager() {
 
     }
@@ -76,5 +85,9 @@ public class GameAssetManager {
 
     public Animation<Texture> getTentacleMoveAnimation() {
         return tentacleMoveAnimation;
+    }
+
+    public Animation<TextureRegion> getEyeBatAnimation() {
+        return eyeBatAnimation;
     }
 }

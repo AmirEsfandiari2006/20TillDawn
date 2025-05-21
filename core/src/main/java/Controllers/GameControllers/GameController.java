@@ -36,7 +36,7 @@ public class GameController {
         this.treeController = new TreeController();
         this.bulletController = new BulletController(selectedWeapon,player,camera);
         this.weaponController = new WeaponController(this.selectedWeapon,player,camera);
-        this.monsterController = new MonsterController(player);
+        this.monsterController = new MonsterController(player,selectedTime);
     }
 
     public void updateGame(float deltaTime , float elapsedTime) {
