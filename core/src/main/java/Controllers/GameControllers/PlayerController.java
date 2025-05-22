@@ -50,20 +50,22 @@ public class PlayerController {
 
 
     public void update() {
-
         updateMouseDirection();
         renderLightMask();
 
-        Main.getBatch().draw(player.getPlayerSprite(), player.getPlayerSprite().getX(), player.getPlayerSprite().getY());
+        if (player.isVisible()) {
+            Main.getBatch().draw(player.getPlayerSprite(),
+                player.getPlayerSprite().getX(),
+                player.getPlayerSprite().getY());
+        }
 
-        if(player.isIdle()){
+        if (player.isIdle()) {
             idleAnimation();
         }
+
         handlePlayerInput();
         updateTakingCoin();
         updateCamera();
-
-        //drawCollisionBox();
     }
 
     public void drawPlayerCollisionBox() {
@@ -132,9 +134,6 @@ public class PlayerController {
             player.getPlayerSprite().setFlip(false, false);
         }
 
-        float spriteWidth = player.getPlayerSprite().getRegionWidth();
-        float spriteHeight = player.getPlayerSprite().getRegionHeight();
-
         player.updatePlayerCollisionRectangle();
 
         player.getPlayerSprite().setX(newX);
@@ -176,10 +175,10 @@ public class PlayerController {
         while (coins.hasNext()) {
             XpCoin coin = coins.next();
             if (player.getCollisionRectangle().hasCollision(coin.getCollisionRectangle())) {
-                final int XP_ADDITION = 2;
+                final int XP_ADDITION = 3;
                 player.setXp(player.getXp() + XP_ADDITION);
-                coin.collect(); // mark as collected (in case you want animations/fade)
-                coins.remove(); // actually remove it from the list
+                coin.collect();
+                coins.remove();
             }
         }
     }

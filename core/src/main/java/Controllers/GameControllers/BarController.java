@@ -33,7 +33,7 @@ public class BarController {
         return font;
     }
 
-    public void render(SpriteBatch batch, OrthographicCamera camera, int score, int kills, int elapsedTime,int totalTime) {
+    public void render(SpriteBatch batch, OrthographicCamera camera, int currentHealth, int fullHealth, int kills, int elapsedTime,int totalTime) {
         int labelX = (int)(camera.position.x - 480);
         int labelY = (int)(camera.position.y + 260);
         int barWidth = 1200;
@@ -52,14 +52,14 @@ public class BarController {
         Main.getBatch().draw(avatarImage, labelX - 10 ,labelY - 40,50,50);
 
         // 2. Draw the text on top of the background
-        normalFont.draw(batch, "Health: " + score, labelX + 50, labelY  - 2);
+        normalFont.draw(batch, "Health: " + currentHealth + "/" + fullHealth, labelX + 50, labelY  - 2);
         normalFont.draw(batch, "Kills: " + kills, labelX  + 50, labelY - 22);
 
         int minutes = ((60 * totalTime) - elapsedTime) / 60;
         int seconds = ((60 * totalTime) - elapsedTime) % 60;
         String time = ( (seconds >= 10) ? String.valueOf(seconds) : "0" + seconds);
 
-        largeFont.draw(batch, "Time:  " + minutes + ":" + time , labelX + 130, labelY - 8);
+        largeFont.draw(batch, "Time:  " + minutes + ":" + time , labelX + 140, labelY - 8);
 
     }
 

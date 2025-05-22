@@ -2,7 +2,6 @@ package Controllers.GameControllers;
 
 import Models.CollisionRectangle;
 import Models.GameAssetManager;
-import Models.Monsters.XpCoin;
 import Models.Tree;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
@@ -26,8 +25,8 @@ public class TreeController {
     private final int NUMBER_OF_TREES = 10;
 
 
-    public TreeController(OrthographicCamera camera) {
-        this.trees = new ArrayList<>();
+    public TreeController(OrthographicCamera camera, ArrayList<Tree> trees) {
+        this.trees = trees;
         this.camera = camera;
         Random random = new Random();
         for (int i = 0; i < NUMBER_OF_TREES; i++) {

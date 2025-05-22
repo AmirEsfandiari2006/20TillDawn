@@ -1,4 +1,4 @@
-package Models.Monsters;
+package Models.Effects;
 
 import Models.GameAssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;

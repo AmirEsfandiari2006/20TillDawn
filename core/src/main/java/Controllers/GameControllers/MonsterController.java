@@ -34,11 +34,11 @@ public class MonsterController {
     private float eyeBatTimer = 0f;
     private static final float EYEBAT_SPAWN_TIME = 10f;
 
-    public MonsterController(Player player, int gameTotalTime,ArrayList<Monster> monsters, ArrayList<XpCoin> xpCoins, OrthographicCamera camera) {
+    public MonsterController(Player player, int gameTotalTime,ArrayList<Monster> monsters, ArrayList<XpCoin> xpCoins, OrthographicCamera camera, ArrayList<MonsterBullet> monsterBullets) {
         this.player = player;
         this.gameTotalTime = (gameTotalTime * 60);
         this.monsters = monsters;
-        this.monsterBullets = new ArrayList<>();
+        this.monsterBullets = monsterBullets;
         this.xpCoins = xpCoins;
         this.camera = camera;
     }
@@ -108,6 +108,17 @@ public class MonsterController {
             shapeRenderer.rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
         }
 
+        shapeRenderer.end();
+    }
+
+    public void drawMonsterBulletCollisionBoxes() {
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.RED);
+        for (MonsterBullet bullet : monsterBullets) {
+            CollisionRectangle rect = bullet.getCollisionRectangle();
+            shapeRenderer.rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+        }
         shapeRenderer.end();
     }
 

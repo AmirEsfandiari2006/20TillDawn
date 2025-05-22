@@ -38,4 +38,24 @@ public class MonsterBullet {
     public Sprite getSprite() {
         return sprite;
     }
+
+    public CollisionRectangle getCollisionRectangle() {
+        return collisionRectangle;
+    }
+
+    public float getDx() {
+        return dx;
+    }
+
+    public void setDx(float dx) {
+        this.dx = dx;
+    }
+
+    public float getDy() {
+        return dy;
+    }
+
+    public void setDy(float dy) {
+        this.dy = dy;
+    }
 }

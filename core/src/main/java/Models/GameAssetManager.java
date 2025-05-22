@@ -50,11 +50,21 @@ public class GameAssetManager {
 
     private final Animation<TextureRegion> deathFX = new Animation<>(
         0.1f,
-        new TextureRegion(new Texture("Monsters/DeathFX/DeathFX_0.png")),
-        new TextureRegion(new Texture("Monsters/DeathFX/DeathFX_1.png")),
-        new TextureRegion(new Texture("Monsters/DeathFX/DeathFX_2.png")),
-        new TextureRegion(new Texture("Monsters/DeathFX/DeathFX_3.png"))
+        new TextureRegion(new Texture("Effects/DeathFX/DeathFX_0.png")),
+        new TextureRegion(new Texture("Effects/DeathFX/DeathFX_1.png")),
+        new TextureRegion(new Texture("Effects/DeathFX/DeathFX_2.png")),
+        new TextureRegion(new Texture("Effects/DeathFX/DeathFX_3.png"))
         );
+
+    private final Animation<TextureRegion> explosionAnimation = new Animation<>(
+        0.1f,
+        new TextureRegion(new Texture("Effects/ExplosionFX/ExplosionFX_0.png")),
+        new TextureRegion(new Texture("Effects/ExplosionFX/ExplosionFX_1.png")),
+        new TextureRegion(new Texture("Effects/ExplosionFX/ExplosionFX_2.png")),
+        new TextureRegion(new Texture("Effects/ExplosionFX/ExplosionFX_3.png")),
+        new TextureRegion(new Texture("Effects/ExplosionFX/ExplosionFX_4.png")),
+        new TextureRegion(new Texture("Effects/ExplosionFX/ExplosionFX_5.png"))
+    );
 
     private GameAssetManager() {
 
@@ -100,5 +110,17 @@ public class GameAssetManager {
 
     public Animation<TextureRegion> getDeathFX() {
         return deathFX;
+    }
+
+    public Animation<TextureRegion> getExplosionAnimation() {
+        Texture sheet = new Texture("Effects/ExplosionFX/ExplosionFX_0.png");
+        TextureRegion[][] frames = TextureRegion.split(sheet, 20, 20); // adjust to your frame size
+        TextureRegion[] animationFrames = new TextureRegion[frames[0].length];
+
+        for (int i = 0; i < frames[0].length; i++) {
+            animationFrames[i] = frames[0][i];
+        }
+
+        return new Animation<>(0.1f, animationFrames);
     }
 }

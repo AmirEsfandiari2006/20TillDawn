@@ -1,7 +1,7 @@
 package Controllers.GameControllers;
 
 import Models.Bullet;
-import Models.Monsters.DeathEffect;
+import Models.Effects.DeathEffect;
 import Models.Monsters.Monster;
 import Models.Monsters.XpCoin;
 import Models.Player;
@@ -61,7 +61,7 @@ public class BulletController {
                         //Setup death Animation
                         deathEffects.add(new DeathEffect(monster.getSprite().getX(), monster.getSprite().getY()));
                         //Drop Xp coin
-                        XpCoin xpCoin = new XpCoin(monster.getX() - monster.getSprite().getWidth(), monster.getY() - monster.getSprite().getHeight());
+                        XpCoin xpCoin = new XpCoin(monster.getX(), monster.getY());
                         xpCoins.add(xpCoin);
                     }
                     break;

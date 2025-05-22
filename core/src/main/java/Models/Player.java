@@ -17,8 +17,17 @@ public class Player {
     private final CharacterType characterType;
     private final Weapon weapon;
 
+    private float blinkTimer = 0f;
+    private boolean visible = true;
+
+    private boolean invincible = false;
+    private float invincibleTime = 0f;
+    private static final float INVINCIBILITY_DURATION = 2f; // 2 seconds of invincibility
+
     private int kills = 0;
     private int xp = 0;
+    private int bonusHealth;
+    private int currentHealth;
 
     private float time = 5;
     private final CollisionRectangle collisionRectangle;
@@ -32,6 +41,7 @@ public class Player {
         this.collisionRectangle = new CollisionRectangle(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth() / 3, playerSprite.getHeight() / 3);
         this.characterType = selectedCharacter;
         this.weapon = selectedWeapon;
+        this.currentHealth = this.getFullHealth();
         initLightEffect();
     }
 
@@ -127,6 +137,60 @@ public class Player {
         float centeredY = spriteY + (spriteHeight - rectHeight) / 2f;
 
         this.getCollisionRectangle().setPosition(centeredX, centeredY);
+    }
+
+    public int getFullHealth() {
+        return characterType.getHealth() + this.bonusHealth;
+    }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+
+    public void setCurrentHealth(int currentHealth) {
+        this.currentHealth = currentHealth;
+    }
+
+
+    public void setBonusHealth(int bonusHealth) {
+        this.bonusHealth = bonusHealth;
+    }
+
+    public boolean isInvincible() {
+        return invincible;
+    }
+
+    public void setInvincible(boolean invincible) {
+        this.invincible = invincible;
+        if (invincible) {
+            invincibleTime = INVINCIBILITY_DURATION;
+        }
+    }
+
+    public void updateInvincibility(float deltaTime) {
+        if (invincible) {
+            invincibleTime -= deltaTime;
+
+            // Update blink
+            blinkTimer += deltaTime;
+            if (blinkTimer >= 0.2f) { // Toggle every 0.1 seconds
+                visible = !visible;
+                blinkTimer = 0f;
+            }
+
+            if (invincibleTime <= 0) {
+                invincible = false;
+                invincibleTime = 0;
+                visible = true;      // Ensure player becomes visible again
+                blinkTimer = 0f;     // Reset blink timer
+            }
+        }
+    }
+
+
+
+    public boolean isVisible() {
+        return visible;
     }
 
 }

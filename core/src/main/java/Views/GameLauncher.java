@@ -1,7 +1,6 @@
 package Views;
 
 import Controllers.GameControllers.GameController;
-import Models.GameAssetManager;
 import Models.KeySettings;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
@@ -18,9 +17,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class GameLauncher implements Screen, InputProcessor {
 
-    private BitmapFont font;
-
-
+    private final BitmapFont font;
 
     private Stage stage;
     private final GameController controller;
@@ -56,15 +53,12 @@ public class GameLauncher implements Screen, InputProcessor {
         controller.getBarController().render(
             Main.getBatch(),
             camera,
-            controller.getPlayer().getHealth(),
+            controller.getPlayer().getCurrentHealth(),
+            controller.getPlayer().getFullHealth(),
             controller.getPlayer().getKills(),
             (int)elapsedTime,
             controller.getSelectedTime()
         );
-
-
-        float camX = (int)camera.position.x;
-        float camY = (int)camera.position.y;
 
         Main.getBatch().end();
 
@@ -78,6 +72,7 @@ public class GameLauncher implements Screen, InputProcessor {
         controller.getPlayerController().drawXpCoinCollisionBoxes();
         controller.getTreeController().drawTreeCollisionBoxes();
         controller.getMonsterController().drawMonsterCollisionBoxes();
+        controller.getMonsterController().drawMonsterBulletCollisionBoxes();
         shapeRenderer.end();
 
     }

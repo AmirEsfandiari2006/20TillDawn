@@ -1,8 +1,10 @@
 package Controllers.GameControllers;
 
 import Models.Monsters.Monster;
+import Models.Monsters.MonsterBullet;
 import Models.Monsters.XpCoin;
 import Models.Player;
+import Models.Tree;
 import Models.Weapon;
 import Models.enums.CharacterType;
 import Views.GameLauncher;
@@ -25,6 +27,9 @@ public class GameController {
     private WeaponController weaponController;
     private MonsterController monsterController;
     private BarController barController;
+    private HitController hitController;
+
+    private int score;
 
     private final CharacterType selectedCharacter;
     private final Weapon selectedWeapon;
@@ -32,9 +37,10 @@ public class GameController {
 
     private Player player;
 
-
-
-    private int score;
+    private final ArrayList<Monster> monsters = new ArrayList<>();
+    private final ArrayList<MonsterBullet> monsterBullets = new ArrayList<>();
+    private final ArrayList<XpCoin> xpCoins = new ArrayList<>();
+    private final ArrayList<Tree>  trees = new ArrayList<>();
 
 
     public GameController(CharacterType selectedCharacter,Weapon weapon, int selectedTime) {
@@ -46,15 +52,14 @@ public class GameController {
     public void setView(GameLauncher view, OrthographicCamera camera) {
         this.view = view;
         this.player = new Player(selectedCharacter,selectedWeapon);
-        ArrayList<Monster> monsters = new ArrayList<>();
-        ArrayList<XpCoin> xpCoins = new ArrayList<>();
         this.playerController = new PlayerController(player,camera,xpCoins);
         this.worldController = new WorldController(playerController);
-        this.treeController = new TreeController(camera);
+        this.treeController = new TreeController(camera, trees);
         this.bulletController = new BulletController(selectedWeapon,player,camera,monsters,xpCoins);
         this.weaponController = new WeaponController(this.selectedWeapon,player,camera);
-        this.monsterController = new MonsterController(player,selectedTime,monsters,xpCoins, camera);
+        this.monsterController = new MonsterController(player,selectedTime,monsters,xpCoins, camera,monsterBullets);
         this.barController = new BarController();
+        this.hitController = new HitController(player,monsters,monsterBullets,trees);
     }
 
     public void updateGame(float deltaTime , float elapsedTime) {
@@ -64,6 +69,7 @@ public class GameController {
         treeController.update();
         bulletController.update();
         monsterController.update(deltaTime,elapsedTime);
+        hitController.update();
     }
 
     public PlayerController getPlayerController() {
