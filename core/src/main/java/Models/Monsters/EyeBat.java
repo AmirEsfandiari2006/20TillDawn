@@ -98,7 +98,28 @@ public class EyeBat implements Monster {
         this.health = health;
     }
 
-    public CollisionRectangle getCollisionRect() {
+    public CollisionRectangle getCollisionRectangle() {
         return collisionRect;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 }

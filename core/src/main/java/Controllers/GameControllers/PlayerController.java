@@ -16,6 +16,7 @@ public class PlayerController {
     private final Player player;
     private final OrthographicCamera camera;
 
+    private final Texture lightMask = new Texture(Gdx.files.internal("whiteMask.png"));
 
     public PlayerController(Player player, OrthographicCamera camera) {
         this.camera = camera;
@@ -40,6 +41,9 @@ public class PlayerController {
     public void update() {
 
         updateMouseDirection();
+
+        renderLightMask();
+
         Main.getBatch().draw(player.getPlayerSprite(), player.getPlayerSprite().getX(), player.getPlayerSprite().getY());
 
         if(player.isIdle()){
@@ -47,6 +51,7 @@ public class PlayerController {
         }
         handlePlayerInput();
         updateCamera();
+
 
     }
 
@@ -113,6 +118,18 @@ public class PlayerController {
         } else if (mousePos.x > playerCenterX && player.getPlayerSprite().isFlipX()) {
             player.getPlayerSprite().flip(true, false);
         }
+    }
+
+    private void renderLightMask() {
+        float playerCenterX = player.getPlayerSprite().getX() + player.getPlayerSprite().getWidth() / 4;
+        float playerCenterY = player.getPlayerSprite().getY() + player.getPlayerSprite().getHeight() / 8;
+
+        float maskWidth = 150;  // Set based on your image or desired light radius
+        float maskHeight = 150;
+
+        Main.getBatch().setColor(1, 1, 1, 0.2f); // Opacity of the light
+        Main.getBatch().draw(lightMask, playerCenterX - maskWidth / 2f, playerCenterY - maskHeight / 2f, maskWidth, maskHeight);
+        Main.getBatch().setColor(1, 1, 1, 1); // Reset color
     }
 
 

@@ -1,9 +1,6 @@
 package Controllers.GameControllers;
 
-import Models.Monsters.EyeBat;
-import Models.Monsters.Monster;
-import Models.Monsters.MonsterBullet;
-import Models.Monsters.Tentacle;
+import Models.Monsters.*;
 import Models.Player;
 import com.Final.Main;
 
@@ -25,10 +22,10 @@ public class MonsterController {
     private float eyeBatTimer = 0f;
     private static final float EYEBAT_SPAWN_TIME = 10f;
 
-    public MonsterController(Player player, int gameTotalTime) {
+    public MonsterController(Player player, int gameTotalTime,ArrayList<Monster> monsters) {
         this.player = player;
         this.gameTotalTime = (gameTotalTime * 60);
-        this.monsters = new ArrayList<>();
+        this.monsters = monsters;
         this.monsterBullets = new ArrayList<>();
     }
 

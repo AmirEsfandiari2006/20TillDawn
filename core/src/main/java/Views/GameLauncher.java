@@ -56,7 +56,7 @@ public class GameLauncher implements Screen, InputProcessor {
             Main.getBatch(),
             camera,
             controller.getPlayer().getHealth(),
-            controller.getKills(),
+            controller.getPlayer().getKills(),
             (int)elapsedTime,
             controller.getSelectedTime()
         );
@@ -66,6 +66,7 @@ public class GameLauncher implements Screen, InputProcessor {
         float camY = (int)camera.position.y;
 
         Main.getBatch().end();
+
     }
 
     @Override

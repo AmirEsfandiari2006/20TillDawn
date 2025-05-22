@@ -44,5 +44,13 @@ public class Bullet {
         return bulletSprite.getX() < 0 || bulletSprite.getX() > Gdx.graphics.getWidth()
             || bulletSprite.getY() < 0 || bulletSprite.getY() > Gdx.graphics.getHeight();
     }
+
+    public CollisionRectangle getCollisionRectangle() {
+        return collisionRectangle;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
 }
 

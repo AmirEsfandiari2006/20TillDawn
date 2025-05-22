@@ -79,7 +79,31 @@ public class Tentacle implements Monster {
         this.health = health;
     }
 
-    public CollisionRectangle getCollisionRect() {
+    @Override
+    public CollisionRectangle getCollisionRectangle() {
         return collisionRect;
     }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
 }
+
+

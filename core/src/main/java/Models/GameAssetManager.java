@@ -48,6 +48,13 @@ public class GameAssetManager {
         new TextureRegion(new Texture("Monsters/EyeBat/EyeBat2.png"))
         );
 
+    private final Animation<TextureRegion> deathFX = new Animation<>(
+        0.1f,
+        new TextureRegion(new Texture("Monsters/DeathFX/DeathFX_0.png")),
+        new TextureRegion(new Texture("Monsters/DeathFX/DeathFX_1.png")),
+        new TextureRegion(new Texture("Monsters/DeathFX/DeathFX_2.png")),
+        new TextureRegion(new Texture("Monsters/DeathFX/DeathFX_3.png"))
+        );
 
     private GameAssetManager() {
 
@@ -89,5 +96,9 @@ public class GameAssetManager {
 
     public Animation<TextureRegion> getEyeBatAnimation() {
         return eyeBatAnimation;
+    }
+
+    public Animation<TextureRegion> getDeathFX() {
+        return deathFX;
     }
 }

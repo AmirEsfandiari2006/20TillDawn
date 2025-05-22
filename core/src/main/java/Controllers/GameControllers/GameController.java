@@ -1,10 +1,17 @@
 package Controllers.GameControllers;
 
+import Models.Monsters.Monster;
 import Models.Player;
 import Models.Weapon;
 import Models.enums.CharacterType;
 import Views.GameLauncher;
+import com.Final.Main;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
+import java.util.ArrayList;
 
 public class GameController {
     private GameLauncher view;
@@ -25,8 +32,8 @@ public class GameController {
     private Player player;
 
 
+
     private int score;
-    private int kills;
 
 
     public GameController(CharacterType selectedCharacter,Weapon weapon, int selectedTime) {
@@ -38,12 +45,13 @@ public class GameController {
     public void setView(GameLauncher view, OrthographicCamera camera) {
         this.view = view;
         this.player = new Player(selectedCharacter,selectedWeapon);
+        ArrayList<Monster> monsters = new ArrayList<>();
         this.playerController = new PlayerController(player,camera);
         this.worldController = new WorldController(playerController);
         this.treeController = new TreeController();
-        this.bulletController = new BulletController(selectedWeapon,player,camera);
+        this.bulletController = new BulletController(selectedWeapon,player,camera,monsters);
         this.weaponController = new WeaponController(this.selectedWeapon,player,camera);
-        this.monsterController = new MonsterController(player,selectedTime);
+        this.monsterController = new MonsterController(player,selectedTime,monsters);
         this.barController = new BarController();
     }
 
@@ -80,9 +88,6 @@ public class GameController {
         return monsterController;
     }
 
-    public int getKills() {
-        return kills;
-    }
 
     public int getScore() {
         return score;
@@ -95,4 +100,6 @@ public class GameController {
     public Player getPlayer() {
         return player;
     }
+
+
 }

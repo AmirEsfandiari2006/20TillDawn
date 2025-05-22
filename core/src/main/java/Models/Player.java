@@ -3,6 +3,7 @@ package Models;
 
 import Models.enums.CharacterType;
 import com.Final.Main;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -10,9 +11,13 @@ public class Player {
     private final Texture playerTexture = new Texture("Characters/1/idle1.png");
     private final Sprite playerSprite = new Sprite(playerTexture);
 
+    private Texture lightMask;
+    private Sprite lightSprite;
+
     private final CharacterType characterType;
     private final Weapon weapon;
 
+    private int kills = 0;
 
     private float time = 5;
     private final CollisionRectangle collisionRectangle;
@@ -26,8 +31,16 @@ public class Player {
         this.collisionRectangle = new CollisionRectangle(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight());
         this.characterType = selectedCharacter;
         this.weapon = selectedWeapon;
+        initLightEffect();
     }
 
+    public void initLightEffect() {
+        lightMask = new Texture(Gdx.files.internal("whiteMask.png"));
+        lightMask.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        lightSprite = new Sprite(lightMask);
+        lightSprite.setSize(300, 300); // Adjust radius size here
+        lightSprite.setOriginCenter();
+    }
 
 
     public float getTime() {
@@ -80,5 +93,14 @@ public class Player {
 
     public int getHealth(){
         return characterType.getHealth();
+    }
+
+
+    public int getKills() {
+        return this.kills;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
     }
 }

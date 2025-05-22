@@ -66,5 +66,6 @@ public class BarController {
 
     public void dispose() {
         normalFont.dispose();
+        largeFont.dispose();
     }
 }
