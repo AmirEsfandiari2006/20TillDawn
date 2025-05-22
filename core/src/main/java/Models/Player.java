@@ -77,4 +77,8 @@ public class Player {
     public CharacterType getCharacterType() {
         return characterType;
     }
+
+    public int getHealth(){
+        return characterType.getHealth();
+    }
 }

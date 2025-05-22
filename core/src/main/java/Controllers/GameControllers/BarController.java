@@ -12,26 +12,28 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 
 public class BarController {
-    private final BitmapFont font;
+    private final BitmapFont normalFont;
+    private final BitmapFont largeFont;
     private final Texture barTexture = new Texture(Gdx.files.internal("GameBar.png"));
 
 
     public BarController() {
-        font = getBitmapFont();
-        font.setColor(Color.WHITE);
+        normalFont = getBitmapFont(14,Color.WHITE);
+        largeFont = getBitmapFont(18,Color.WHITE);
     }
 
-    private BitmapFont getBitmapFont() {
+    private BitmapFont getBitmapFont(int size, Color color) {
         final BitmapFont font;
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/LiberationSans.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 14;
+        parameter.size = size;
+        parameter.color = color;
         font = generator.generateFont(parameter);
         generator.dispose();
         return font;
     }
 
-    public void render(SpriteBatch batch, OrthographicCamera camera, int score, int kills) {
+    public void render(SpriteBatch batch, OrthographicCamera camera, int score, int kills, int elapsedTime,int totalTime) {
         int labelX = (int)(camera.position.x - 480);
         int labelY = (int)(camera.position.y + 260);
         int barWidth = 1200;
@@ -50,12 +52,19 @@ public class BarController {
         Main.getBatch().draw(avatarImage, labelX - 10 ,labelY - 40,50,50);
 
         // 2. Draw the text on top of the background
-        font.draw(batch, "Score: " + score, labelX + 50, labelY  - 2);
-        font.draw(batch, "Kills: " + kills, labelX  + 50, labelY - 22);
+        normalFont.draw(batch, "Health: " + score, labelX + 50, labelY  - 2);
+        normalFont.draw(batch, "Kills: " + kills, labelX  + 50, labelY - 22);
+
+        int minutes = ((60 * totalTime) - elapsedTime) / 60;
+        int seconds = ((60 * totalTime) - elapsedTime) % 60;
+        String time = ( (seconds >= 10) ? String.valueOf(seconds) : "0" + seconds);
+
+        largeFont.draw(batch, "Time:  " + minutes + ":" + time , labelX + 130, labelY - 8);
+
     }
 
 
     public void dispose() {
-        font.dispose();
+        normalFont.dispose();
     }
 }

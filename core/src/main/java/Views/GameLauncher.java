@@ -27,8 +27,7 @@ public class GameLauncher implements Screen, InputProcessor {
     private float elapsedTime = 0f;
 
     public GameLauncher(GameController gameController , Skin skin) {
-            font = new BitmapFont(); // You can also load a custom .fnt file
-            font.setColor(Color.WHITE);
+            font = new BitmapFont();
             this.controller = gameController;
             camera = new OrthographicCamera();
             controller.setView(this,camera);
@@ -53,7 +52,14 @@ public class GameLauncher implements Screen, InputProcessor {
         Main.getBatch().begin();
 
         controller.updateGame(delta, elapsedTime); // draw world
-        controller.getBarController().render(Main.getBatch(), camera, controller.getScore(), controller.getKills());
+        controller.getBarController().render(
+            Main.getBatch(),
+            camera,
+            controller.getPlayer().getHealth(),
+            controller.getKills(),
+            (int)elapsedTime,
+            controller.getSelectedTime()
+        );
 
 
         float camX = (int)camera.position.x;

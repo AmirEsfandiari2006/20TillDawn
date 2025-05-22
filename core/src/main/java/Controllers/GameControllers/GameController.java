@@ -22,6 +22,8 @@ public class GameController {
     private final Weapon selectedWeapon;
     private final int selectedTime;
 
+    private Player player;
+
 
     private int score;
     private int kills;
@@ -34,8 +36,8 @@ public class GameController {
     }
 
     public void setView(GameLauncher view, OrthographicCamera camera) {
-        Player player = new Player(selectedCharacter,selectedWeapon);
         this.view = view;
+        this.player = new Player(selectedCharacter,selectedWeapon);
         this.playerController = new PlayerController(player,camera);
         this.worldController = new WorldController(playerController);
         this.treeController = new TreeController();
@@ -88,5 +90,9 @@ public class GameController {
 
     public BarController getBarController() {
         return barController;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
