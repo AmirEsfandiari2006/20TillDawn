@@ -1,14 +1,21 @@
 package Controllers.GameControllers;
 
+import Models.CollisionRectangle;
 import Models.GameAssetManager;
 import Models.KeySettings;
+import Models.Monsters.XpCoin;
 import Models.Player;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PlayerController {
 
@@ -16,11 +23,15 @@ public class PlayerController {
     private final Player player;
     private final OrthographicCamera camera;
 
-    private final Texture lightMask = new Texture(Gdx.files.internal("whiteMask.png"));
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-    public PlayerController(Player player, OrthographicCamera camera) {
+    private final Texture lightMask = new Texture(Gdx.files.internal("whiteMask.png"));
+    private final ArrayList<XpCoin> xpCoins;
+
+    public PlayerController(Player player, OrthographicCamera camera, ArrayList<XpCoin> xpCoins ) {
         this.camera = camera;
         this.player = player;
+        this.xpCoins = xpCoins;
     }
 
     public void idleAnimation() {
@@ -41,7 +52,6 @@ public class PlayerController {
     public void update() {
 
         updateMouseDirection();
-
         renderLightMask();
 
         Main.getBatch().draw(player.getPlayerSprite(), player.getPlayerSprite().getX(), player.getPlayerSprite().getY());
@@ -50,9 +60,34 @@ public class PlayerController {
             idleAnimation();
         }
         handlePlayerInput();
+        updateTakingCoin();
         updateCamera();
 
+        //drawCollisionBox();
+    }
 
+    public void drawPlayerCollisionBox() {
+        shapeRenderer.setProjectionMatrix(camera.combined); // Use camera projection
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.RED); // Or any color you prefer
+
+        CollisionRectangle rect = player.getCollisionRectangle();
+        shapeRenderer.rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+
+        shapeRenderer.end();
+    }
+
+    public void drawXpCoinCollisionBoxes() {
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.GREEN); // Green for XP coins
+
+        for (XpCoin coin : xpCoins) {
+            CollisionRectangle rect = coin.getCollisionRectangle();
+            shapeRenderer.rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+        }
+
+        shapeRenderer.end();
     }
 
     private void updateCamera() {
@@ -100,11 +135,12 @@ public class PlayerController {
         float spriteWidth = player.getPlayerSprite().getRegionWidth();
         float spriteHeight = player.getPlayerSprite().getRegionHeight();
 
-        newX = Math.max(0, Math.min(newX, Main.WORLD_WIDTH - spriteWidth));
-        newY = Math.max(0, Math.min(newY, Main.WORLD_HEIGHT - spriteHeight));
+        player.updatePlayerCollisionRectangle();
 
         player.getPlayerSprite().setX(newX);
         player.getPlayerSprite().setY(newY);
+
+        player.getCollisionRectangle().setPosition(newX, newY);
     }
 
     private void updateMouseDirection() {
@@ -132,5 +168,19 @@ public class PlayerController {
         Main.getBatch().setColor(1, 1, 1, 1); // Reset color
     }
 
-
+    private void updateTakingCoin() {
+        for (XpCoin coin : xpCoins) {
+            coin.update(Gdx.graphics.getDeltaTime());
+        }
+        Iterator<XpCoin> coins = xpCoins.iterator();
+        while (coins.hasNext()) {
+            XpCoin coin = coins.next();
+            if (player.getCollisionRectangle().hasCollision(coin.getCollisionRectangle())) {
+                final int XP_ADDITION = 2;
+                player.setXp(player.getXp() + XP_ADDITION);
+                coin.collect(); // mark as collected (in case you want animations/fade)
+                coins.remove(); // actually remove it from the list
+            }
+        }
+    }
 }

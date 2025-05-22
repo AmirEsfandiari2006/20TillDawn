@@ -1,8 +1,8 @@
 package Models;
 
 public class CollisionRectangle {
-    float x,y;
-    float width,height;
+    private float x,y;
+    private float width,height;
 
     public CollisionRectangle(float x, float y, float width, float height) {
         this.x = x;
@@ -24,5 +24,43 @@ public class CollisionRectangle {
     public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public void setSize(float width, float height) {
+        this.width = width;
+        this.height = height;
     }
 }

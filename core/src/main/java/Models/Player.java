@@ -18,6 +18,7 @@ public class Player {
     private final Weapon weapon;
 
     private int kills = 0;
+    private int xp = 0;
 
     private float time = 5;
     private final CollisionRectangle collisionRectangle;
@@ -28,7 +29,7 @@ public class Player {
     public Player(CharacterType selectedCharacter, Weapon selectedWeapon){
         playerSprite.setPosition((float) Main.WORLD_WIDTH /2,(float)Main.WORLD_HEIGHT/2);
         playerSprite.setSize(playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
-        this.collisionRectangle = new CollisionRectangle(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight());
+        this.collisionRectangle = new CollisionRectangle(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth() / 3, playerSprite.getHeight() / 3);
         this.characterType = selectedCharacter;
         this.weapon = selectedWeapon;
         initLightEffect();
@@ -103,4 +104,29 @@ public class Player {
     public void setKills(int kills) {
         this.kills = kills;
     }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public void updatePlayerCollisionRectangle() {
+        float spriteX = this.getPlayerSprite().getX();
+        float spriteY = this.getPlayerSprite().getY();
+        float spriteWidth = this.getPlayerSprite().getWidth();
+        float spriteHeight = this.getPlayerSprite().getHeight();
+
+        // Assuming your CollisionRectangle has getWidth() and getHeight() methods:
+        float rectWidth = this.getCollisionRectangle().getWidth();
+        float rectHeight = this.getCollisionRectangle().getHeight();
+
+        float centeredX = spriteX + (spriteWidth - rectWidth) / 2f;
+        float centeredY = spriteY + (spriteHeight - rectHeight) / 2f;
+
+        this.getCollisionRectangle().setPosition(centeredX, centeredY);
+    }
+
 }

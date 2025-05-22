@@ -30,7 +30,7 @@ public class Tentacle implements Monster {
         moveAnimation = GameAssetManager.getInstance().getTentacleMoveAnimation();
         currentAnimation = spawnAnimation;
 
-        this.sprite = new Sprite(spawnAnimation.getKeyFrame(0));
+        this.sprite = new Sprite(spawnAnimation.getKeyFrame(2));
         this.sprite.setPosition(x, y);
 
         // Create the collision rectangle using sprite dimensions

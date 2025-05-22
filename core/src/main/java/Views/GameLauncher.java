@@ -10,6 +10,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -66,6 +67,18 @@ public class GameLauncher implements Screen, InputProcessor {
         float camY = (int)camera.position.y;
 
         Main.getBatch().end();
+
+
+        //Only for Debug
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.RED);
+        controller.getPlayerController().drawPlayerCollisionBox();
+        controller.getPlayerController().drawXpCoinCollisionBoxes();
+        controller.getTreeController().drawTreeCollisionBoxes();
+        controller.getMonsterController().drawMonsterCollisionBoxes();
+        shapeRenderer.end();
 
     }
 

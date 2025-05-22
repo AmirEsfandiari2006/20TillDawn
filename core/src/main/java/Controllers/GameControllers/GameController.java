@@ -1,6 +1,7 @@
 package Controllers.GameControllers;
 
 import Models.Monsters.Monster;
+import Models.Monsters.XpCoin;
 import Models.Player;
 import Models.Weapon;
 import Models.enums.CharacterType;
@@ -46,12 +47,13 @@ public class GameController {
         this.view = view;
         this.player = new Player(selectedCharacter,selectedWeapon);
         ArrayList<Monster> monsters = new ArrayList<>();
-        this.playerController = new PlayerController(player,camera);
+        ArrayList<XpCoin> xpCoins = new ArrayList<>();
+        this.playerController = new PlayerController(player,camera,xpCoins);
         this.worldController = new WorldController(playerController);
-        this.treeController = new TreeController();
-        this.bulletController = new BulletController(selectedWeapon,player,camera,monsters);
+        this.treeController = new TreeController(camera);
+        this.bulletController = new BulletController(selectedWeapon,player,camera,monsters,xpCoins);
         this.weaponController = new WeaponController(this.selectedWeapon,player,camera);
-        this.monsterController = new MonsterController(player,selectedTime,monsters);
+        this.monsterController = new MonsterController(player,selectedTime,monsters,xpCoins, camera);
         this.barController = new BarController();
     }
 
@@ -101,5 +103,7 @@ public class GameController {
         return player;
     }
 
-
+    public TreeController getTreeController() {
+        return treeController;
+    }
 }
