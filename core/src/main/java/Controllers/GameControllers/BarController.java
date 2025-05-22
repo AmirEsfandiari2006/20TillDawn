@@ -38,6 +38,11 @@ public class BarController {
         final BitmapFont font;
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/LiberationSans.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.minFilter = Texture.TextureFilter.Linear;
+        parameter.magFilter = Texture.TextureFilter.Linear;
+        parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        parameter.genMipMaps = true;
+        parameter.hinting = FreeTypeFontGenerator.Hinting.Full;
         parameter.size = size;
         parameter.color = color;
         font = generator.generateFont(parameter);

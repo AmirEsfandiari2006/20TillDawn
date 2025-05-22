@@ -64,7 +64,6 @@ public class BulletController {
                         XpCoin xpCoin = new XpCoin(monster.getX(), monster.getY());
                         xpCoins.add(xpCoin);
                     }
-                    break;
                 }
             }
 
@@ -121,18 +120,20 @@ public class BulletController {
 
 
     public void handleWeaponShoot(int mouseX, int mouseY) {
-        Vector3 worldMouse = new Vector3(mouseX, mouseY, 0);
-        camera.unproject(worldMouse);
+        for(int i = 0; i < weapon.getType().getProjectTile(); i++){
+            Vector3 worldMouse = new Vector3(mouseX, mouseY, 0);
+            camera.unproject(worldMouse);
 
-        float startX = weapon.getType().getSprite().getX() + weapon.getType().getSprite().getWidth() / 2f;
-        float startY = weapon.getType().getSprite().getY() + weapon.getType().getSprite().getHeight() / 2f;
+            float startX = weapon.getType().getSprite().getX() + weapon.getType().getSprite().getWidth() / 2f;
+            float startY = weapon.getType().getSprite().getY() + weapon.getType().getSprite().getHeight() / 2f;
 
-        float dirX = worldMouse.x - startX;
-        float dirY = worldMouse.y - startY;
+            float dirX = worldMouse.x - startX - (7 * i);
+            float dirY = worldMouse.y - startY - (7 * i);
 
-        if (dirX == 0 && dirY == 0) return;
+            if (dirX == 0 && dirY == 0) return;
 
-        bullets.add(new Bullet(startX, startY, dirX, dirY, weapon.getType().getDamage()));
+            bullets.add(new Bullet(startX, startY, dirX, dirY, weapon.getType().getDamage()));
+        }
     }
 
 }

@@ -8,7 +8,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -17,15 +16,12 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class GameLauncher implements Screen, InputProcessor {
 
-    private final BitmapFont font;
-
     private Stage stage;
     private final GameController controller;
     private final OrthographicCamera camera;
     private float elapsedTime = 0f;
 
     public GameLauncher(GameController gameController , Skin skin) {
-            font = new BitmapFont();
             this.controller = gameController;
             camera = new OrthographicCamera();
             controller.setView(this,camera);

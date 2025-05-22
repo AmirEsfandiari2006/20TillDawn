@@ -51,8 +51,7 @@ public class PreGameMenuController {
 
     public int getGameTime(String duration) {
         switch (duration){
-            //TODO don't forget this
-            case "2 Minutes": return 1;
+            case "2 Minutes": return 2;
             case "5 Minutes": return 5;
             case "10 Minutes": return 10;
             case "20 Minutes": return 20;
