@@ -1,11 +1,16 @@
 package Models;
 
 
+import Controllers.GameControllers.GameController;
+import Models.enums.Ability;
 import Models.enums.CharacterType;
+import Models.enums.GameState;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
+import java.util.ArrayList;
 
 public class Player {
     private final Texture playerTexture = new Texture("Characters/1/idle1.png");
@@ -26,7 +31,7 @@ public class Player {
 
     private int kills = 0;
 
-    private int xp = 0;
+    private int xp = 21;
     private int level = 0;
 
     private int bonusHealth;
@@ -38,7 +43,18 @@ public class Player {
     private boolean isIdle = true;
     private boolean isRunning = false;
 
-    public Player(CharacterType selectedCharacter, Weapon selectedWeapon){
+    private final GameController gameController;
+
+    private float speedBoostTimer = 0f;
+    private float damageBoostTimer = 0f;
+
+    private float speedMultiplier = 1f;
+    private float damageMultiplier = 1f;
+
+    private final ArrayList<Ability> allAbilities = new ArrayList<>();
+
+    public Player(GameController gameController,CharacterType selectedCharacter, Weapon selectedWeapon){
+        this.gameController = gameController;
         playerSprite.setPosition((float) Main.WORLD_WIDTH /2,(float)Main.WORLD_HEIGHT/2);
         playerSprite.setSize(playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
         this.collisionRectangle = new CollisionRectangle(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth() / 3, playerSprite.getHeight() / 3);
@@ -94,7 +110,7 @@ public class Player {
     }
 
     public int getPlayerSpeed() {
-        return characterType.getSpeed();
+        return (int)( characterType.getSpeed() * speedMultiplier);
     }
 
     public Weapon getWeapon() {
@@ -207,6 +223,10 @@ public class Player {
         while (xp >= getXpNeededForNextLevel()) {
             xp -= getXpNeededForNextLevel(); // remove only this level’s XP
             level++;
+
+            gameController.setGameState(GameState.ABILITY_SELECTION);
+            gameController.getAbilitySelectionController().showAbilitySelection();
+
         }
     }
 
@@ -217,4 +237,53 @@ public class Player {
     public float getXpProgressRatio() {
         return (float) xp / getXpNeededForNextLevel();
     }
+
+    public int getFinalDamage(){
+        return (int) (damageMultiplier *  weapon.getType().getDamage());
+    }
+
+    public ArrayList<Ability> getAllAbilities() {
+        return allAbilities;
+    }
+
+    public void applyAbility(Ability ability) {
+        switch (ability) {
+            case VITALITY:
+                ++this.bonusHealth;
+                this.currentHealth = getFullHealth();
+                break;
+            case DAMAGER:
+                this.damageMultiplier = 1.25f;
+                this.damageBoostTimer = 10f;
+                break;
+            case PROCREASE:
+                this.weapon.setBonusProjectile(this.getWeapon().getBonusProjectile() + 1);
+                break;
+            case AMOCREASE:
+                this.weapon.setBonusMaxAmmo(this.getWeapon().getBonusMaxAmmo() + 5);
+                break;
+            case SPEEDY:
+                this.speedMultiplier = 2.0f;
+                this.speedBoostTimer = 10f;
+                break;
+        }
+    }
+
+    public void updateAbilityTimer(float delta) {
+        if (speedBoostTimer > 0) {
+            speedBoostTimer -= delta;
+            if (speedBoostTimer <= 0) {
+                speedMultiplier = 1f;
+            }
+        }
+
+        if (damageBoostTimer > 0) {
+            damageBoostTimer -= delta;
+            if (damageBoostTimer <= 0) {
+                damageMultiplier = 1f;
+            }
+        }
+    }
+
+
 }

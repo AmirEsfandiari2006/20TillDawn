@@ -7,12 +7,9 @@ import Models.Player;
 import Models.Tree;
 import Models.Weapon;
 import Models.enums.CharacterType;
+import Models.enums.GameState;
 import Views.GameLauncher;
-import com.Final.Main;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.ArrayList;
 
@@ -28,6 +25,9 @@ public class GameController {
     private MonsterController monsterController;
     private BarController barController;
     private HitController hitController;
+    private AbilitySelectionController abilitySelectionController;
+
+    private GameState gameState = GameState.PLAYING;
 
     private int score;
 
@@ -51,7 +51,7 @@ public class GameController {
 
     public void setView(GameLauncher view, OrthographicCamera camera) {
         this.view = view;
-        this.player = new Player(selectedCharacter,selectedWeapon);
+        this.player = new Player(this,selectedCharacter,selectedWeapon);
         this.playerController = new PlayerController(player,camera,xpCoins);
         this.worldController = new WorldController(playerController);
         this.treeController = new TreeController(camera, trees);
@@ -60,6 +60,7 @@ public class GameController {
         this.monsterController = new MonsterController(player,selectedTime,monsters,xpCoins, camera,monsterBullets);
         this.barController = new BarController(player);
         this.hitController = new HitController(player,monsters,monsterBullets,trees);
+        this.abilitySelectionController = new AbilitySelectionController(this,player);
     }
 
     public void updateGame(float deltaTime , float elapsedTime) {
@@ -70,6 +71,7 @@ public class GameController {
         bulletController.update();
         monsterController.update(deltaTime,elapsedTime);
         hitController.update();
+        abilitySelectionController.update();
     }
 
     public PlayerController getPlayerController() {
@@ -111,5 +113,29 @@ public class GameController {
 
     public TreeController getTreeController() {
         return treeController;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public AbilitySelectionController getAbilitySelectionController() {
+        return abilitySelectionController;
+    }
+
+    public void setAbilitySelectionController(AbilitySelectionController abilitySelectionController) {
+        this.abilitySelectionController = abilitySelectionController;
+    }
+
+    public GameLauncher getView() {
+        return view;
+    }
+
+    public void setView(GameLauncher view) {
+        this.view = view;
     }
 }

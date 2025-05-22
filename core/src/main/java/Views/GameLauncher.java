@@ -2,6 +2,7 @@ package Views;
 
 import Controllers.GameControllers.GameController;
 import Models.KeySettings;
+import Models.enums.GameState;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -16,103 +17,119 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class GameLauncher implements Screen, InputProcessor {
 
-    private Stage stage;
     private final GameController controller;
-    private final OrthographicCamera camera;
+
+    // Gameplay rendering
+    private final OrthographicCamera gameCamera;
+    private final StretchViewport gameViewport;
+
+    // UI rendering
+    private final OrthographicCamera uiCamera;
+    private final StretchViewport uiViewport;
+    private Stage uiStage;
+
     private float elapsedTime = 0f;
 
-    public GameLauncher(GameController gameController , Skin skin) {
-            this.controller = gameController;
-            camera = new OrthographicCamera();
-            controller.setView(this,camera);
+    public GameLauncher(GameController gameController, Skin skin) {
+        this.controller = gameController;
+
+        // Game camera setup (follows player, can zoom)
+        gameCamera = new OrthographicCamera();
+        gameViewport = new StretchViewport(Main.WORLD_WIDTH, Main.WORLD_HEIGHT, gameCamera);
+
+        // UI camera setup (static UI)
+        uiCamera = new OrthographicCamera();
+        uiViewport = new StretchViewport(Main.WORLD_WIDTH, Main.WORLD_HEIGHT, uiCamera);
+        uiStage = new Stage(uiViewport);
+
+        controller.setView(this, gameCamera);
     }
 
     @Override
     public void show() {
-        stage = new Stage(new StretchViewport(Main.WORLD_WIDTH, Main.WORLD_HEIGHT, camera));
         Gdx.input.setInputProcessor(this);
-
+        setStage(uiStage);
     }
-
 
     @Override
     public void render(float delta) {
         elapsedTime += delta;
 
+        // Clear screen
         ScreenUtils.clear(Color.BLACK);
 
-        camera.zoom = 0.5f;
+        updateInputProcessor();
 
-        Main.getBatch().begin();
-
-        controller.updateGame(delta, elapsedTime); // draw world
-        controller.getBarController().render(Main.getBatch(), camera,
-            controller.getPlayer().getCurrentHealth(),
-            controller.getPlayer().getFullHealth(),
-            controller.getPlayer().getKills(),
-            (int)elapsedTime,
-            controller.getSelectedTime(),
-            controller.getPlayer().getXp(),
-            controller.getPlayer().getLevel(),
-            controller.getPlayer().getXpNeededForNextLevel()
-        );
-        Main.getBatch().end();
+        // GAME RENDERING
+        gameCamera.update();
+        gameCamera.zoom = 0.5f; // You can make this dynamic if needed
+        Main.getBatch().setProjectionMatrix(gameCamera.combined);
 
 
-        //Only for Debug
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.RED);
-        controller.getPlayerController().drawPlayerCollisionBox();
-        controller.getPlayerController().drawXpCoinCollisionBoxes();
-        controller.getTreeController().drawTreeCollisionBoxes();
-        controller.getMonsterController().drawMonsterCollisionBoxes();
-        controller.getMonsterController().drawMonsterBulletCollisionBoxes();
-        shapeRenderer.end();
+        if (controller.getGameState() == GameState.PLAYING) {
+            Main.getBatch().begin();
+            controller.updateGame(delta, elapsedTime);
+            controller.getBarController().render(Main.getBatch(), gameCamera,
+                controller.getPlayer().getCurrentHealth(),
+                controller.getPlayer().getFullHealth(),
+                controller.getPlayer().getKills(),
+                (int) elapsedTime,
+                controller.getSelectedTime(),
+                controller.getPlayer().getXp(),
+                controller.getPlayer().getLevel(),
+                controller.getPlayer().getXpNeededForNextLevel()
+            );
+
+            Main.getBatch().end();
+            // Optional: debug shapes
+            ShapeRenderer shapeRenderer = new ShapeRenderer();
+            shapeRenderer.setProjectionMatrix(gameCamera.combined);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(Color.RED);
+            controller.getPlayerController().drawPlayerCollisionBox();
+            controller.getPlayerController().drawXpCoinCollisionBoxes();
+            controller.getTreeController().drawTreeCollisionBoxes();
+            controller.getMonsterController().drawMonsterCollisionBoxes();
+            controller.getMonsterController().drawMonsterBulletCollisionBoxes();
+            shapeRenderer.end();
+        }
+
+
+        // UI RENDERING
+        uiStage.act(delta);
+        uiStage.draw();
 
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height);
+        gameViewport.update(width, height);
+        uiViewport.update(width, height, true);
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() { }
 
     @Override
     public void dispose() {
-
+        uiStage.dispose();
     }
 
+    // Input Handling
+    @Override
+    public boolean keyDown(int keycode) { return false; }
 
     @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
+    public boolean keyUp(int keycode) { return false; }
 
     @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
+    public boolean keyTyped(char character) { return false; }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -123,19 +140,13 @@ public class GameLauncher implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) { return false; }
 
     @Override
-    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
+    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) { return false; }
 
     @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
+    public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
@@ -144,8 +155,22 @@ public class GameLauncher implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
+    public boolean scrolled(float amountX, float amountY) { return false; }
+
+    public void setStage(Stage stage) {
+        this.uiStage = stage;
+    }
+
+    public Stage getStage() {
+        return uiStage;
+    }
+
+    private void updateInputProcessor() {
+        if (controller.getGameState() == GameState.PLAYING) {
+            Gdx.input.setInputProcessor(this);
+        } else {
+            Gdx.input.setInputProcessor(uiStage);
+        }
     }
 
 }
