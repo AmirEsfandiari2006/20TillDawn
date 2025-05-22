@@ -176,7 +176,7 @@ public class PlayerController {
             XpCoin coin = coins.next();
             if (player.getCollisionRectangle().hasCollision(coin.getCollisionRectangle())) {
                 final int XP_ADDITION = 3;
-                player.setXp(player.getXp() + XP_ADDITION);
+                player.addXp(XP_ADDITION);
                 coin.collect();
                 coins.remove();
             }

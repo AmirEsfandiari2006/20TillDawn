@@ -1,6 +1,7 @@
 package Controllers.GameControllers;
 
 import Models.App;
+import Models.Player;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,12 +13,23 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 
 public class BarController {
+
+
+
     private final BitmapFont normalFont;
     private final BitmapFont largeFont;
+    private final BitmapFont smallFont;
     private final Texture barTexture = new Texture(Gdx.files.internal("GameBar.png"));
 
 
-    public BarController() {
+    private final Player player;
+
+    private final Texture xpBarBackground = new Texture(Gdx.files.internal("default.png"));
+    private final Texture xpBarFill = new Texture(Gdx.files.internal("fill.png"));
+
+    public BarController(Player player) {
+        this.player = player;
+        smallFont =getBitmapFont( 10, Color.WHITE);
         normalFont = getBitmapFont(14,Color.WHITE);
         largeFont = getBitmapFont(18,Color.WHITE);
     }
@@ -33,7 +45,7 @@ public class BarController {
         return font;
     }
 
-    public void render(SpriteBatch batch, OrthographicCamera camera, int currentHealth, int fullHealth, int kills, int elapsedTime,int totalTime) {
+    public void render(SpriteBatch batch, OrthographicCamera camera, int currentHealth, int fullHealth, int kills, int elapsedTime, int totalTime, int xp, int level, int xpForNextLevel) {
         int labelX = (int)(camera.position.x - 480);
         int labelY = (int)(camera.position.y + 260);
         int barWidth = 1200;
@@ -61,10 +73,25 @@ public class BarController {
 
         largeFont.draw(batch, "Time:  " + minutes + ":" + time , labelX + 140, labelY - 8);
 
+        // 3. XP Bar rendering
+        int xpBarX = labelX + 260;
+        int xpBarY = labelY - 35;
+        int xpBarWidth = 200;
+        int xpBarHeight = 16;
+
+        float xpRatio = (xpForNextLevel == 0) ? 0f : Math.min(1f, (float) xp / xpForNextLevel); // Clamp to 1
+
+        batch.draw(xpBarBackground, xpBarX, xpBarY, xpBarWidth, xpBarHeight);
+        batch.draw(xpBarFill, xpBarX, xpBarY, xpBarWidth * xpRatio, xpBarHeight);
+
+        normalFont.draw(batch, "Level: " + level, xpBarX + 80 , xpBarY + 30);
+        smallFont.draw(batch, xp + "/" + xpForNextLevel + " XP", xpBarX + 85, xpBarY + 12);
     }
 
 
+
     public void dispose() {
+        smallFont.dispose();
         normalFont.dispose();
         largeFont.dispose();
     }

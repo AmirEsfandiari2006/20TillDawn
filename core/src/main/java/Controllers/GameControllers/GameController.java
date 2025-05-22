@@ -58,7 +58,7 @@ public class GameController {
         this.bulletController = new BulletController(selectedWeapon,player,camera,monsters,xpCoins);
         this.weaponController = new WeaponController(this.selectedWeapon,player,camera);
         this.monsterController = new MonsterController(player,selectedTime,monsters,xpCoins, camera,monsterBullets);
-        this.barController = new BarController();
+        this.barController = new BarController(player);
         this.hitController = new HitController(player,monsters,monsterBullets,trees);
     }
 

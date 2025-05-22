@@ -50,16 +50,16 @@ public class GameLauncher implements Screen, InputProcessor {
         Main.getBatch().begin();
 
         controller.updateGame(delta, elapsedTime); // draw world
-        controller.getBarController().render(
-            Main.getBatch(),
-            camera,
+        controller.getBarController().render(Main.getBatch(), camera,
             controller.getPlayer().getCurrentHealth(),
             controller.getPlayer().getFullHealth(),
             controller.getPlayer().getKills(),
             (int)elapsedTime,
-            controller.getSelectedTime()
+            controller.getSelectedTime(),
+            controller.getPlayer().getXp(),
+            controller.getPlayer().getLevel(),
+            controller.getPlayer().getXpNeededForNextLevel()
         );
-
         Main.getBatch().end();
 
 

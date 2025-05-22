@@ -25,7 +25,10 @@ public class Player {
     private static final float INVINCIBILITY_DURATION = 2f; // 2 seconds of invincibility
 
     private int kills = 0;
+
     private int xp = 0;
+    private int level = 0;
+
     private int bonusHealth;
     private int currentHealth;
 
@@ -187,10 +190,31 @@ public class Player {
         }
     }
 
-
-
     public boolean isVisible() {
         return visible;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void addXp(int amount) {
+        this.xp += amount;
+        while (xp >= getXpNeededForNextLevel()) {
+            xp -= getXpNeededForNextLevel(); // remove only this level’s XP
+            level++;
+        }
+    }
+
+    public int getXpNeededForNextLevel() {
+        return (level + 1) * 20;
+    }
+
+    public float getXpProgressRatio() {
+        return (float) xp / getXpNeededForNextLevel();
+    }
 }
