@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class App {
 
+    private Setting setting = new Setting();
+
+
     private static App instance;
 
     private App() {
@@ -34,4 +37,11 @@ public class App {
         this.currentUser = currentUser;
     }
 
+    public Setting getSetting() {
+        return setting;
+    }
+
+    public void setSetting(Setting setting) {
+        this.setting = setting;
+    }
 }

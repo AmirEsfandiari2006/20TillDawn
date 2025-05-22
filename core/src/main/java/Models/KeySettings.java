@@ -9,8 +9,10 @@ public class KeySettings {
     public int moveLeft = Input.Keys.A;
     public int moveRight = Input.Keys.D;
     public int shoot = Input.Buttons.LEFT;
+    public int reload= Input.Keys.R;
 
     private static KeySettings instance;
+
 
     private KeySettings(){
 

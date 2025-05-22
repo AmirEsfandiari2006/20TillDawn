@@ -120,6 +120,7 @@ public class BulletController {
 
 
     public void handleWeaponShoot(int mouseX, int mouseY) {
+        if(weapon.getCurrentAmmo() <= 0) return;
         for(int i = 0; i < weapon.getProjectile(); i++){
             Vector3 worldMouse = new Vector3(mouseX, mouseY, 0);
             camera.unproject(worldMouse);
@@ -134,6 +135,9 @@ public class BulletController {
 
             bullets.add(new Bullet(startX, startY, dirX, dirY, player.getFinalDamage()));
         }
+
+        weapon.setCurrentAmmo(weapon.getCurrentAmmo() - 1);
+
     }
 
 }

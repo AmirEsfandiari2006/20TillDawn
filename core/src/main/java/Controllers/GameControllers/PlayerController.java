@@ -1,10 +1,7 @@
 package Controllers.GameControllers;
 
-import Models.CollisionRectangle;
-import Models.GameAssetManager;
-import Models.KeySettings;
+import Models.*;
 import Models.Monsters.XpCoin;
-import Models.Player;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -52,6 +49,7 @@ public class PlayerController {
     public void update() {
         updateMouseDirection();
         renderLightMask();
+        updateGunReload();
 
         if (player.isVisible()) {
             Main.getBatch().draw(player.getPlayerSprite(),
@@ -69,9 +67,9 @@ public class PlayerController {
     }
 
     public void drawPlayerCollisionBox() {
-        shapeRenderer.setProjectionMatrix(camera.combined); // Use camera projection
+        shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.RED); // Or any color you prefer
+        shapeRenderer.setColor(Color.RED);
 
         CollisionRectangle rect = player.getCollisionRectangle();
         shapeRenderer.rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
@@ -82,7 +80,7 @@ public class PlayerController {
     public void drawXpCoinCollisionBoxes() {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.GREEN); // Green for XP coins
+        shapeRenderer.setColor(Color.GREEN);
 
         for (XpCoin coin : xpCoins) {
             CollisionRectangle rect = coin.getCollisionRectangle();
@@ -134,12 +132,37 @@ public class PlayerController {
             player.getPlayerSprite().setFlip(false, false);
         }
 
+        reloadGun();
+
         player.updatePlayerCollisionRectangle();
 
         player.getPlayerSprite().setX(newX);
         player.getPlayerSprite().setY(newY);
 
         player.getCollisionRectangle().setPosition(newX, newY);
+    }
+
+    private void reloadGun() {
+        Weapon weapon = player.getWeapon();
+
+        if (weapon.isReloading()) return;
+
+        if (App.getInstance().getSetting().isAutoReload() || Gdx.input.isKeyPressed(KeySettings.getInstance().reload)) {
+            weapon.setReloading(true);
+            weapon.setReloadTimer(weapon.getType().getTimeReload());
+        }
+    }
+
+    private void updateGunReload(){
+        if (player.getWeapon().isReloading()) {
+            float timeLeft = player.getWeapon().getReloadTimer() - Gdx.graphics.getDeltaTime();
+            player.getWeapon().setReloadTimer(timeLeft);
+
+            if (timeLeft <= 0) {
+                player.getWeapon().setCurrentAmmo(player.getWeapon().getMaxAmmo());
+                player.getWeapon().setReloading(false);
+            }
+        }
     }
 
     private void updateMouseDirection() {

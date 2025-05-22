@@ -31,7 +31,7 @@ public class Player {
 
     private int kills = 0;
 
-    private int xp = 21;
+    private int xp = 0;
     private int level = 0;
 
     private int bonusHealth;
