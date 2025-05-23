@@ -35,7 +35,7 @@ public class LoginMenu implements Screen {
         this.controller = controller;
         controller.setView(this);
 
-        titleLabel = new Label("Login Menu", skin);
+        titleLabel = new Label("Login Menu", skin,"title");
 
         usernameField = new TextField("", skin);
         passwordField = new TextField("", skin);
@@ -53,7 +53,6 @@ public class LoginMenu implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        titleLabel.setFontScale(2f);
         usernameField.setMessageText("Enter Username");
         passwordField.setMessageText("Enter Password");
 

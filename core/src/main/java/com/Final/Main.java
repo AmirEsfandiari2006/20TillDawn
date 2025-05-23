@@ -1,6 +1,7 @@
 package com.Final;
 
 import Controllers.RegisterMenuController;
+import Models.App;
 import Models.GameAssetManager;
 import Views.RegisterMenu;
 import com.badlogic.gdx.Game;
@@ -22,6 +23,12 @@ public class Main extends Game {
 
     @Override
     public void create() {
+
+        GameAssetManager.getInstance().queueMusic();
+        GameAssetManager.getInstance().finishLoadingAssets();
+
+        GameAssetManager.getInstance().playMusic(App.getInstance().getSettings().getCurrentMusic());
+
         ShaderProgram.pedantic = false;
         grayscaleShader = new ShaderProgram(
             Gdx.files.internal("Shaders/default.vert"),
@@ -31,7 +38,6 @@ public class Main extends Game {
         if (!grayscaleShader.isCompiled()) {
             System.out.println("Shader compile error: " + grayscaleShader.getLog());
         }
-
 
         main = this;
         batch = new SpriteBatch();

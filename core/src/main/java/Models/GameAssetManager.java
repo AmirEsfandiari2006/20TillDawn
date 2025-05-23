@@ -1,14 +1,17 @@
 package Models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-public class GameAssetManager {
+public class GameAssetManager extends AssetManager {
 
+    private Music currentMusic;
 
     private final Animation<Texture> character1Animation = new Animation<>(
         0.1f,
@@ -66,19 +69,49 @@ public class GameAssetManager {
         new TextureRegion(new Texture("Effects/ExplosionFX/ExplosionFX_5.png"))
     );
 
+
+    public void queueMusic() {
+        load("Musics/FirstTrack.mp3", Music.class);
+        load("Musics/SecondTrack.mp3", Music.class);
+        load("Musics/ThirdTrack.mp3", Music.class);
+    }
+
+    public void finishLoadingAssets() {
+        finishLoading();
+    }
+
+    public Music getMusic(String name) {
+        return get("music/" + name + ".mp3", Music.class);
+    }
+
     private GameAssetManager() {
 
     }
 
-    private static GameAssetManager instance = new GameAssetManager();
-    private Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
-
-    public static GameAssetManager getInstance() {
-        if(instance == null) {
-            instance = new GameAssetManager();
+    public void playCurrentMusic(Setting setting) {
+        if (currentMusic != null) {
+            currentMusic.stop();
         }
-        return instance;
+
+        String trackName = setting.getCurrentMusic();
+        if (!isLoaded("Musics/" + trackName)) {
+            System.err.println("Music not loaded: " + trackName);
+            return;
+        }
+
+        Music music = getMusic(trackName);
+        music.setLooping(true);
+        music.setVolume(setting.getMusicVolume());
+        music.play();
+        currentMusic = music;
     }
+
+    public void stopMusic() {
+        if (currentMusic != null) {
+            currentMusic.stop();
+        }
+    }
+
 
     public Skin getSkin() {
         return skin;
@@ -123,4 +156,39 @@ public class GameAssetManager {
 
         return new Animation<>(0.1f, animationFrames);
     }
+
+    public Music getCurrentMusic() {
+        if (currentMusic == null) {
+            playMusic(App.getInstance().getSettings().getCurrentMusic());
+        }
+        return currentMusic;
+    }
+
+    public void setCurrentMusic(Music currentMusic) {
+        this.currentMusic = currentMusic;
+    }
+
+    public void playMusic(String musicName) {
+        if (currentMusic != null) {
+            currentMusic.stop();
+            currentMusic.dispose();
+        }
+
+        currentMusic = get("Musics/" + musicName + ".mp3", Music.class);
+        currentMusic.setLooping(true);
+        currentMusic.setVolume(App.getInstance().getSettings().getMusicVolume());
+        currentMusic.play();
+    }
+
+
+    private static GameAssetManager instance = new GameAssetManager();
+    private Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
+
+    public static GameAssetManager getInstance() {
+        if(instance == null) {
+            instance = new GameAssetManager();
+        }
+        return instance;
+    }
+
 }

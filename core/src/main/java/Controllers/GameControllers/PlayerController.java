@@ -173,7 +173,7 @@ public class PlayerController {
 
         if (weapon.isReloading()) return;
 
-        if (App.getInstance().getSetting().isAutoReload() || Gdx.input.isKeyPressed(KeySettings.getInstance().reload)) {
+        if ((App.getInstance().getSettings().isAutoReload() && weapon.getCurrentAmmo() == 0) || Gdx.input.isKeyPressed(KeySettings.getInstance().reload)) {
             weapon.setReloading(true);
             weapon.setReloadTimer(weapon.getType().getTimeReload());
         }

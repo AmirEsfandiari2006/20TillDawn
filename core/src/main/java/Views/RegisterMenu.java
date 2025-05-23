@@ -39,7 +39,7 @@ public class RegisterMenu implements Screen {
         controller.setView(this);
 
         //Set Up labels
-        titleLabel = new Label("Register Menu", skin);
+        titleLabel = new Label("Register Menu", skin,"title");
 
         //Set Up fields
         usernameField = new TextField("", skin);
@@ -56,9 +56,6 @@ public class RegisterMenu implements Screen {
     public void show() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-
-        // Title label
-        titleLabel.setFontScale(3f);
 
 
         // Text fields

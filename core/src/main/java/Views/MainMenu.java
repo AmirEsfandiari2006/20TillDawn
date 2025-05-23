@@ -50,7 +50,7 @@ public class MainMenu implements Screen {
             App.getInstance().getCurrentUser().getScore(), skin);
 
         // Divider
-        mainMenuLabel = new Label("Main Menu", skin);
+        mainMenuLabel = new Label("Main Menu", skin,"title");
         // Menu buttons
         preGameButton = new TextButton("PreGame", skin);
         loadGameButton = new TextButton("Load Game", skin);
@@ -67,7 +67,6 @@ public class MainMenu implements Screen {
 
         // Font scaling
         userInfoLabel.setFontScale(1.2f);
-        mainMenuLabel.setFontScale(3f);
 
         // Load background
         Texture bgTexture = new Texture(Gdx.files.internal("background.png"));
@@ -135,6 +134,20 @@ public class MainMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleProfileButton();
+            }
+        });
+
+        scoreBoardButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleScoreboardButton();
+            }
+        });
+
+        settingButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleSettingButton();
             }
         });
 

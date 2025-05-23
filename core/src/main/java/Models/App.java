@@ -51,11 +51,11 @@ public class App {
         this.currentUser = currentUser;
     }
 
-    public Setting getSetting() {
+    public Setting getSettings() {
         return setting;
     }
 
-    public void setSetting(Setting setting) {
+    public void setSettings(Setting setting) {
         this.setting = setting;
     }
 
@@ -70,4 +70,6 @@ public class App {
     public void toggleGrayScale() {
         isGrayscale = !isGrayscale;
     }
+
+
 }
