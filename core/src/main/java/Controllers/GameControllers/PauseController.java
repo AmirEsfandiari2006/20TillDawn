@@ -10,12 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class PauseController {
-    private final GameController controller;
+    private final GameController gameController;
     private final Stage uiStage;
     private final Table pauseTable;
 
     public PauseController(GameController controller, Stage stage) {
-        this.controller = controller;
+        this.gameController = controller;
         this.uiStage = stage;
         this.pauseTable = new Table();
         pauseTable.setFillParent(true);
@@ -37,7 +37,7 @@ public class PauseController {
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.setGameState(GameState.PLAYING);
+                gameController.setGameState(GameState.PLAYING);
                 hidePauseMenu();
             }
         });
@@ -66,7 +66,9 @@ public class PauseController {
         giveUp.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                showCheatDialog();
+                hidePauseMenu();
+                gameController.setGameState(GameState.END_GAME);
+                gameController.getEndGameController().showEndScreen(gameController.getView().getStage(), "You Gave Up!", false);
             }
         });
 
@@ -103,7 +105,7 @@ public class PauseController {
         };
 
         Table table = new Table();
-        for (Ability ability : controller.getPlayer().getAllAbilities()) {
+        for (Ability ability : gameController.getPlayer().getAllAbilities()) {
             StringBuilder sb = new StringBuilder();
             sb.append("- ").append(ability.getName()).append(": ").append(ability.getDescription()).append("\n");
             table.add(new Label(sb, GameAssetManager.getInstance().getSkin())).left().padBottom(10).row();

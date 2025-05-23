@@ -28,6 +28,7 @@ public class GameController {
     private AbilitySelectionController abilitySelectionController;
     private CheatController cheatController;
     private PauseController pauseController;
+    private EndGameController endGameController;
 
     private GameState gameState = GameState.PLAYING;
 
@@ -65,6 +66,7 @@ public class GameController {
         this.abilitySelectionController = new AbilitySelectionController(this,player);
         this.cheatController = new CheatController(this);
         this.pauseController = new PauseController(this,view.getStage());
+        this.endGameController = new EndGameController(this);
     }
 
     public void updateGame(float deltaTime , float elapsedTime) {
@@ -76,6 +78,8 @@ public class GameController {
         monsterController.update(deltaTime,elapsedTime);
         hitController.update();
         abilitySelectionController.update();
+
+        endGameController.checkGameEnded();
     }
 
     public PlayerController getPlayerController() {
@@ -131,10 +135,6 @@ public class GameController {
         return abilitySelectionController;
     }
 
-    public void setAbilitySelectionController(AbilitySelectionController abilitySelectionController) {
-        this.abilitySelectionController = abilitySelectionController;
-    }
-
     public GameLauncher getView() {
         return view;
     }
@@ -150,4 +150,10 @@ public class GameController {
     public PauseController getPauseController() {
         return pauseController;
     }
+
+    public EndGameController getEndGameController() {
+        return endGameController;
+    }
+
+
 }

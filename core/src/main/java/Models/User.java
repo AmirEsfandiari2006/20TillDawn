@@ -7,7 +7,12 @@ public class User {
     private String password;
     private String emailAddress;
     private int avatarIndex;
+
     private int score;
+    private int kills;
+    private int maxSurviveTime;
+
+
 
     public User(String username, String password, String emailAddress) {
         this.username = username;
@@ -45,8 +50,8 @@ public class User {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void increaseScore(int score) {
+        this.score += score;
     }
 
     public int getAvatarIndex() {
@@ -55,5 +60,21 @@ public class User {
 
     public void setAvatarIndex(int avatarIndex) {
         this.avatarIndex = avatarIndex;
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public void increaseKills(int kills) {
+        this.kills += kills;
+    }
+
+    public int getMaxSurviveTime() {
+        return maxSurviveTime;
+    }
+
+    public void setMaxSurviveTime(int maxSurviveTime) {
+        this.maxSurviveTime = Math.max(maxSurviveTime, this.maxSurviveTime);
     }
 }
