@@ -6,6 +6,8 @@ import Models.GameAssetManager;
 import Views.RegisterMenu;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
@@ -40,6 +42,11 @@ public class Main extends Game {
         if (!grayscaleShader.isCompiled()) {
             System.out.println("Shader compile error: " + grayscaleShader.getLog());
         }
+
+        Pixmap pixmap = new Pixmap(Gdx.files.internal("cursor.png"));
+        Cursor cursor = Gdx.graphics.newCursor(pixmap, 0, 0);
+        Gdx.graphics.setCursor(cursor);
+        pixmap.dispose();
 
         main = this;
         batch = new SpriteBatch();
