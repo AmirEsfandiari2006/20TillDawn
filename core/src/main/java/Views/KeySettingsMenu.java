@@ -57,6 +57,7 @@ public class KeySettingsMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Main.getMain().setScreen(new SettingMenu(new SettingMenuController(), GameAssetManager.getInstance().getSkin())); // Change as needed
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -68,6 +69,7 @@ public class KeySettingsMenu implements Screen {
         multiplexer.addProcessor(new InputAdapter() {
             @Override
             public boolean keyDown(int keycode) {
+                GameAssetManager.getInstance().playSFX("uiclick");
                 if (waitingForKey != null) {
                     controller.setKeyBinding(waitingForKey, keycode);
                     controller.updateButtonLabel(waitingForKey);

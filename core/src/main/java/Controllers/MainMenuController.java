@@ -39,4 +39,8 @@ public class MainMenuController {
     public void handleSettingButton() {
         Main.getMain().setScreen(new SettingMenu(new SettingMenuController() , GameAssetManager.getInstance().getSkin()));
     }
+
+    public void handleTalentButton() {
+        Main.getMain().setScreen(new TalentMenu(new TalentMenuController(), GameAssetManager.getInstance().getSkin()));
+    }
 }

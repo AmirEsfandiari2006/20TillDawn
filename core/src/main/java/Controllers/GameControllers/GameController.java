@@ -32,8 +32,6 @@ public class GameController {
 
     private GameState gameState = GameState.PLAYING;
 
-    private int score;
-
     private final CharacterType selectedCharacter;
     private final Weapon selectedWeapon;
     private final int selectedTime;
@@ -104,11 +102,6 @@ public class GameController {
 
     public MonsterController getMonsterController() {
         return monsterController;
-    }
-
-
-    public int getScore() {
-        return score;
     }
 
     public BarController getBarController() {

@@ -46,7 +46,7 @@ public class PauseController {
         saveAndQuitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.exit(0); // Or return to main menu
+                System.exit(0);
                 GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
@@ -126,7 +126,6 @@ public class PauseController {
         Dialog dialog = new Dialog("Cheat Codes",  GameAssetManager.getInstance().getSkin()) {
             @Override
             protected void result(Object object) {
-                // Optional
             }
         };
         Table table = new Table();

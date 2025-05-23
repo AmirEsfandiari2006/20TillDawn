@@ -156,7 +156,14 @@ public class MainMenu implements Screen {
             }
         });
 
-        // Add listeners for other buttons as needed...
+        talentButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleTalentButton();
+                GameAssetManager.getInstance().playSFX("uiclick");
+            }
+        });
+
     }
 
 
