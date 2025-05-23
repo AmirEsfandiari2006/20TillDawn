@@ -4,8 +4,17 @@ import java.util.ArrayList;
 
 public class App {
 
-    private Setting setting = new Setting();
-    private boolean isGrayscale = false;
+    static {
+        DatabaseManager.initialize();
+        App app = getInstance();
+        app.getUsers().addAll(DatabaseManager.loadUsers());
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            for (User user : app.getUsers()) {
+                DatabaseManager.saveUser(user);
+            }
+        }));
+    }
 
 
     private static App instance;
@@ -21,7 +30,11 @@ public class App {
         return instance;
     }
 
-    private ArrayList<User> users = new ArrayList<>();
+    private Setting setting = new Setting();
+    private boolean isGrayscale = false;
+
+
+    private final ArrayList<User> users = new ArrayList<>();
     private User currentUser;
 
 

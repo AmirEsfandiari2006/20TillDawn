@@ -46,7 +46,7 @@ public class RegisterMenuController {
     public boolean validUsername() {
         String name = view.getUsernameField().getText();
         if (name.isEmpty()) return false;
-        return App.getInstance().getUsers().stream().noneMatch(user -> view.getUsernameField().getText().equals(name));
+        return App.getInstance().getUsers().stream().noneMatch(user -> user.getUsername().equals(name));
     }
 
     public boolean validEmailAddress() {

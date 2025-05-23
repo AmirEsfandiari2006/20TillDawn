@@ -1,8 +1,13 @@
 package Models;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class User {
+public class User implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private String username;
     private String password;
     private String emailAddress;
@@ -77,4 +82,6 @@ public class User {
     public void setMaxSurviveTime(int maxSurviveTime) {
         this.maxSurviveTime = Math.max(maxSurviveTime, this.maxSurviveTime);
     }
+
+
 }
