@@ -2,6 +2,7 @@ package Controllers.GameControllers;
 
 import Models.*;
 import Models.Monsters.XpCoin;
+import Models.enums.GameState;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -120,6 +121,16 @@ public class PlayerController {
         float speed = player.getPlayerSpeed();
         float newX = player.getPlayerSprite().getX();
         float newY = player.getPlayerSprite().getY();
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            if (gameController.getGameState() == GameState.PLAYING) {
+                gameController.setGameState(GameState.PAUSE);
+                gameController.getPauseController().showPauseMenu();
+            } else if (gameController.getGameState() == GameState.PAUSE) {
+                gameController.setGameState(GameState.PLAYING);
+                gameController.getPauseController().hidePauseMenu();
+            }
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.ALT_RIGHT)) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {

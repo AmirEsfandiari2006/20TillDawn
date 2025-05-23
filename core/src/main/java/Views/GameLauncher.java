@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.GameControllers.GameController;
+import Models.App;
 import Models.KeySettings;
 import Models.enums.GameState;
 import com.Final.Main;
@@ -53,51 +54,28 @@ public class GameLauncher implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        elapsedTime += delta;
-
         // Clear screen
         ScreenUtils.clear(Color.BLACK);
 
         updateInputProcessor();
 
-        // GAME RENDERING
         gameCamera.update();
-        gameCamera.zoom = 0.5f; // You can make this dynamic if needed
+        gameCamera.zoom = 0.5f;
         Main.getBatch().setProjectionMatrix(gameCamera.combined);
 
-
         if (controller.getGameState() == GameState.PLAYING) {
-            Main.getBatch().begin();
-            controller.updateGame(delta, elapsedTime);
-            controller.getBarController().render(Main.getBatch(), gameCamera,
-                controller.getPlayer().getCurrentHealth(),
-                controller.getPlayer().getFullHealth(),
-                controller.getPlayer().getKills(),
-                (int) elapsedTime,
-                controller.getSelectedTime(),
-                controller.getPlayer().getXp(),
-                controller.getPlayer().getLevel(),
-                controller.getPlayer().getXpNeededForNextLevel()
-            );
-
-            Main.getBatch().end();
-            // Optional: debug shapes
-            ShapeRenderer shapeRenderer = new ShapeRenderer();
-            shapeRenderer.setProjectionMatrix(gameCamera.combined);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(Color.RED);
-            controller.getPlayerController().drawPlayerCollisionBox();
-            controller.getPlayerController().drawXpCoinCollisionBoxes();
-            controller.getTreeController().drawTreeCollisionBoxes();
-            controller.getMonsterController().drawMonsterCollisionBoxes();
-            controller.getMonsterController().drawMonsterBulletCollisionBoxes();
-            shapeRenderer.end();
+            elapsedTime += delta;
+            setUpGame(delta);
+            debugMode();
         }
 
 
         // UI RENDERING
         uiStage.act(delta);
         uiStage.draw();
+
+        //SetUpShader
+        setUpShader();
 
     }
 
@@ -171,6 +149,46 @@ public class GameLauncher implements Screen, InputProcessor {
         } else {
             Gdx.input.setInputProcessor(uiStage);
         }
+    }
+
+    private void setUpShader() {
+        if (App.getInstance().isGrayscale()) {
+            Main.getBatch().setShader(Main.grayscaleShader);
+        } else {
+            Main.getBatch().setShader(null);
+        }
+    }
+
+
+    private void setUpGame(float delta) {
+        Main.getBatch().begin();
+        controller.updateGame(delta, elapsedTime);
+        controller.getBarController().render(Main.getBatch(), gameCamera,
+            controller.getPlayer().getCurrentHealth(),
+            controller.getPlayer().getFullHealth(),
+            controller.getPlayer().getKills(),
+            (int) elapsedTime,
+            controller.getSelectedTime(),
+            controller.getPlayer().getXp(),
+            controller.getPlayer().getLevel(),
+            controller.getPlayer().getXpNeededForNextLevel()
+        );
+
+        Main.getBatch().end();
+    }
+
+
+    private void debugMode() {
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(gameCamera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.RED);
+        controller.getPlayerController().drawPlayerCollisionBox();
+        controller.getPlayerController().drawXpCoinCollisionBoxes();
+        controller.getTreeController().drawTreeCollisionBoxes();
+        controller.getMonsterController().drawMonsterCollisionBoxes();
+        controller.getMonsterController().drawMonsterBulletCollisionBoxes();
+        shapeRenderer.end();
     }
 
     public float getElapsedTime() {

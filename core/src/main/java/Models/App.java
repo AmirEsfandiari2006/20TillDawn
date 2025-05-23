@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class App {
 
     private Setting setting = new Setting();
+    private boolean isGrayscale = false;
 
 
     private static App instance;
@@ -43,5 +44,17 @@ public class App {
 
     public void setSetting(Setting setting) {
         this.setting = setting;
+    }
+
+    public boolean isGrayscale() {
+        return isGrayscale;
+    }
+
+    public void setGrayscale(boolean grayscale) {
+        isGrayscale = grayscale;
+    }
+
+    public void toggleGrayScale() {
+        isGrayscale = !isGrayscale;
     }
 }

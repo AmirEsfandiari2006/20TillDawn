@@ -27,7 +27,7 @@ public class Player {
 
     private boolean invincible = false;
     private float invincibleTime = 0f;
-    private static final float INVINCIBILITY_DURATION = 2f; // 2 seconds of invincibility
+    private static final float INVINCIBILITY_DURATION = 2f;
 
     private int kills = 0;
 
@@ -200,8 +200,8 @@ public class Player {
             if (invincibleTime <= 0) {
                 invincible = false;
                 invincibleTime = 0;
-                visible = true;      // Ensure player becomes visible again
-                blinkTimer = 0f;     // Reset blink timer
+                visible = true;
+                blinkTimer = 0f;
             }
         }
     }

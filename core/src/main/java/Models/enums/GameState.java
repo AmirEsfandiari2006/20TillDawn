@@ -2,5 +2,7 @@ package Models.enums;
 
 public enum GameState {
     PLAYING,
-    ABILITY_SELECTION
+    ABILITY_SELECTION,
+    PAUSE
+
 }

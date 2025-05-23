@@ -27,6 +27,7 @@ public class GameController {
     private HitController hitController;
     private AbilitySelectionController abilitySelectionController;
     private CheatController cheatController;
+    private PauseController pauseController;
 
     private GameState gameState = GameState.PLAYING;
 
@@ -63,6 +64,7 @@ public class GameController {
         this.hitController = new HitController(player,monsters,monsterBullets,trees);
         this.abilitySelectionController = new AbilitySelectionController(this,player);
         this.cheatController = new CheatController(this);
+        this.pauseController = new PauseController(this,view.getStage());
     }
 
     public void updateGame(float deltaTime , float elapsedTime) {
@@ -143,5 +145,9 @@ public class GameController {
 
     public CheatController getCheatController() {
         return cheatController;
+    }
+
+    public PauseController getPauseController() {
+        return pauseController;
     }
 }
