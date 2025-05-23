@@ -61,6 +61,7 @@ public class SettingMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleBackToMainMenu();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -76,6 +77,7 @@ public class SettingMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 controller.handleMusicSelected(musicSelectBox.getSelected());
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -83,6 +85,7 @@ public class SettingMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 controller.handleSfxToggled(sfxCheckbox.isChecked());
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -90,13 +93,15 @@ public class SettingMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 controller.handleAutoReloadToggled(autoReloadCheckbox.isChecked());
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
         keyBindingButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.handleKeyBindingChange(); // You can open a new screen or popup
+                controller.handleKeyBindingChange();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -104,6 +109,7 @@ public class SettingMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 App.getInstance().toggleGrayScale();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
     }

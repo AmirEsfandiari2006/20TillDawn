@@ -120,6 +120,7 @@ public class MainMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleLogout();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -127,6 +128,7 @@ public class MainMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handlePreGame();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -134,6 +136,7 @@ public class MainMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleProfileButton();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -141,6 +144,7 @@ public class MainMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleScoreboardButton();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -148,6 +152,7 @@ public class MainMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleSettingButton();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 

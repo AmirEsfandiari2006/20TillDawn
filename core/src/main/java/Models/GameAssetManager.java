@@ -3,15 +3,20 @@ package Models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GameAssetManager extends AssetManager {
 
     private Music currentMusic;
+    private final Map<String, Sound> soundEffects = new HashMap<>();
 
     private final Animation<Texture> character1Animation = new Animation<>(
         0.1f,
@@ -74,6 +79,22 @@ public class GameAssetManager extends AssetManager {
         load("Musics/FirstTrack.mp3", Music.class);
         load("Musics/SecondTrack.mp3", Music.class);
         load("Musics/ThirdTrack.mp3", Music.class);
+    }
+
+    public void loadSoundEffects() {
+        soundEffects.put("explosion", Gdx.audio.newSound(Gdx.files.internal("SFXs/ExplosionBlood.wav")));
+        soundEffects.put("healShort", Gdx.audio.newSound(Gdx.files.internal("SFXs/HealShort.wav")));
+        soundEffects.put("hitByEnemy", Gdx.audio.newSound(Gdx.files.internal("SFXs/Hit.wav")));
+        soundEffects.put("obtainPoints", Gdx.audio.newSound(Gdx.files.internal("SFXs/ObtainPoints.wav")));
+        soundEffects.put("powerUp", Gdx.audio.newSound(Gdx.files.internal("SFXs/Powerup.wav")));
+        soundEffects.put("reload", Gdx.audio.newSound(Gdx.files.internal("SFXs/Reload.wav")));
+        soundEffects.put("shoot", Gdx.audio.newSound(Gdx.files.internal("SFXs/SingleShot.wav")));
+        soundEffects.put("uiclick", Gdx.audio.newSound(Gdx.files.internal("SFXs/UIClick.wav")));
+        soundEffects.put("walk", Gdx.audio.newSound(Gdx.files.internal("SFXs/walk.mp3")));
+        soundEffects.put("winning", Gdx.audio.newSound(Gdx.files.internal("SFXs/YouWin.wav")));
+        soundEffects.put("losing", Gdx.audio.newSound(Gdx.files.internal("SFXs/YouLose.wav")));
+
+
     }
 
     public void finishLoadingAssets() {
@@ -178,6 +199,17 @@ public class GameAssetManager extends AssetManager {
         currentMusic.setLooping(true);
         currentMusic.setVolume(App.getInstance().getSettings().getMusicVolume());
         currentMusic.play();
+    }
+
+    public void playSFX(String name) {
+        if (!App.getInstance().getSettings().isSfxEnabled()) return;
+
+        Sound sound = soundEffects.get(name);
+        if (sound != null) {
+            sound.play(1f);
+        } else {
+            System.err.println("SFX not found: " + name);
+        }
     }
 
 

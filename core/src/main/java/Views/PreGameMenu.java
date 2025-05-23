@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.PreGameMenuController;
+import Models.GameAssetManager;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -113,7 +114,9 @@ public class PreGameMenu implements Screen {
                     weaponSelectBox.getSelected(),
                     durationSelectBox.getSelected()
                 );
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
+
         });
     }
 

@@ -2,6 +2,7 @@ package Controllers;
 
 import Models.App;
 import Models.GameAssetManager;
+import Views.KeySettingsMenu;
 import Views.MainMenu;
 import Views.SettingMenu;
 import com.Final.Main;
@@ -37,7 +38,7 @@ public class SettingMenuController {
     }
 
     public void handleKeyBindingChange() {
-        // Show key binding configuration screen
+        Main.getMain().setScreen(new KeySettingsMenu(new KeySettingsController(), GameAssetManager.getInstance().getSkin()));
     }
 
 }

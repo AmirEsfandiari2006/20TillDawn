@@ -145,19 +145,25 @@ public class PlayerController {
         }
 
         // --- Movement handling ---
-        if (Gdx.input.isKeyPressed(KeySettings.getInstance().moveUp)) {
+        boolean isWalk = false;
+        if (Gdx.input.isKeyPressed(App.getInstance().getSettings().getKeySettings().moveUp)) {
             newY += speed;
+            isWalk = true;
         }
-        if (Gdx.input.isKeyPressed(KeySettings.getInstance().moveDown)) {
+        if (Gdx.input.isKeyPressed(App.getInstance().getSettings().getKeySettings().moveDown)) {
             newY -= speed;
+            isWalk = true;
         }
-        if (Gdx.input.isKeyPressed(KeySettings.getInstance().moveLeft)) {
+        if (Gdx.input.isKeyPressed(App.getInstance().getSettings().getKeySettings().moveLeft)) {
             newX -= speed;
             player.getPlayerSprite().setFlip(true, false);
+            isWalk = true;
+
         }
-        if (Gdx.input.isKeyPressed(KeySettings.getInstance().moveRight)) {
+        if (Gdx.input.isKeyPressed(App.getInstance().getSettings().getKeySettings().moveRight)) {
             newX += speed;
             player.getPlayerSprite().setFlip(false, false);
+            isWalk = true;
         }
 
         reloadGun();
@@ -173,9 +179,10 @@ public class PlayerController {
 
         if (weapon.isReloading()) return;
 
-        if ((App.getInstance().getSettings().isAutoReload() && weapon.getCurrentAmmo() == 0) || Gdx.input.isKeyPressed(KeySettings.getInstance().reload)) {
+        if ((App.getInstance().getSettings().isAutoReload() && weapon.getCurrentAmmo() == 0) || Gdx.input.isKeyPressed(App.getInstance().getSettings().getKeySettings().reload)) {
             weapon.setReloading(true);
             weapon.setReloadTimer(weapon.getType().getTimeReload());
+            GameAssetManager.getInstance().playSFX("reload");
         }
     }
 
@@ -228,6 +235,7 @@ public class PlayerController {
                 player.addXp(XP_ADDITION);
                 coin.collect();
                 coins.remove();
+                GameAssetManager.getInstance().playSFX("obtainPoints");
             }
         }
     }

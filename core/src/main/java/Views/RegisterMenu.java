@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.RegisterMenuController;
+import Models.GameAssetManager;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -95,6 +96,7 @@ public class RegisterMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleRegisterButtonClicked();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -102,6 +104,7 @@ public class RegisterMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleSignInButtonClicked();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 

@@ -93,14 +93,14 @@ public class BarController {
         normalFont.draw(batch, "Level: " + level, xpBarX + 80 , xpBarY + 30);
         smallFont.draw(batch, xp + "/" + xpForNextLevel + " XP", xpBarX + 85, xpBarY + 12);
 
-        int relaodX = xpBarX + 227;
-        int relaodY = xpBarY;
+        int reloadX = xpBarX + 227;
+        int reloadY = xpBarY;
 
         Sprite iconSprite = new Sprite(player.getWeapon().getType().getSprite());
         iconSprite.setFlip(false, false);
 
-        batch.draw(iconSprite, relaodX, relaodY, 40, 40);
-        largeFont.draw( batch, player.getWeapon().getCurrentAmmo() + "/" + player.getWeapon().getMaxAmmo(), relaodX + 50, labelY - 8);
+        batch.draw(iconSprite, reloadX, reloadY, 40, 40);
+        largeFont.draw( batch, (player.getWeapon().getCurrentAmmo() > 1000 ? "Inf" : player.getWeapon().getCurrentAmmo() ) + "/" + player.getWeapon().getMaxAmmo(), reloadX + 50, labelY - 8);
     }
 
 

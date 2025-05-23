@@ -46,6 +46,7 @@ public class HitController {
 
         for (Tree tree : trees) {
             if (tree.getCollisionRectangle().hasCollision(player.getCollisionRectangle())) {
+                GameAssetManager.getInstance().playSFX("hitByEnemy");
                 player.setCurrentHealth(player.getCurrentHealth() - HIT_TREE_DAMAGE);
                 player.setInvincible(true); // Activate invincibility
                 break; // avoid multiple hits from several trees in one frame
@@ -62,6 +63,7 @@ public class HitController {
         for (Monster monster : monsters) {
 
             if(monster.getCollisionRectangle().hasCollision(player.getCollisionRectangle())) {
+                GameAssetManager.getInstance().playSFX("hitByEnemy");
                 player.setCurrentHealth(player.getCurrentHealth() - HIT_MONSTER_DAMAGE);
                 player.setInvincible(true); // Activate invincibility
                 break; // avoid multiple hits from several trees in one frame
@@ -83,6 +85,7 @@ public class HitController {
                 // Damage player
                 player.setCurrentHealth(player.getCurrentHealth() - HIT_BULLET_DAMAGE);
                 player.setInvincible(true);
+                GameAssetManager.getInstance().playSFX("explosion");
 
                 // Trigger explosion at bullet position
                 float explosionX = monsterBullet.getSprite().getX();

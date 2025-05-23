@@ -2,6 +2,7 @@ package Controllers.GameControllers;
 
 import Models.Bullet;
 import Models.Effects.DeathEffect;
+import Models.GameAssetManager;
 import Models.Monsters.Monster;
 import Models.Monsters.XpCoin;
 import Models.Player;
@@ -135,9 +136,8 @@ public class BulletController {
 
             bullets.add(new Bullet(startX, startY, dirX, dirY, player.getFinalDamage()));
         }
-
         weapon.setCurrentAmmo(weapon.getCurrentAmmo() - 1);
-
+        GameAssetManager.getInstance().playSFX("shoot");
     }
 
 }

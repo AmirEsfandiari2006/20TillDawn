@@ -13,17 +13,4 @@ public class KeySettings {
 
     private static KeySettings instance;
 
-
-    private KeySettings(){
-
-    }
-
-    public static KeySettings getInstance() {
-        if (instance == null) {
-            instance = new KeySettings();
-        }
-        return instance;
-    }
-
-
 }

@@ -25,6 +25,8 @@ public class Main extends Game {
     public void create() {
 
         GameAssetManager.getInstance().queueMusic();
+        GameAssetManager.getInstance().loadSoundEffects();
+
         GameAssetManager.getInstance().finishLoadingAssets();
 
         GameAssetManager.getInstance().playMusic(App.getInstance().getSettings().getCurrentMusic());

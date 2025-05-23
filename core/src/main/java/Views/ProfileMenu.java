@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.ProfileMenuController;
+import Models.GameAssetManager;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -115,6 +116,7 @@ public class ProfileMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleUsernameChange();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -122,6 +124,7 @@ public class ProfileMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handlePasswordChange();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -129,6 +132,7 @@ public class ProfileMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleDeleteAccount();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -136,6 +140,7 @@ public class ProfileMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleBack();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -143,6 +148,7 @@ public class ProfileMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.changeUsername();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -150,6 +156,7 @@ public class ProfileMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.changePassword();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -160,7 +167,8 @@ public class ProfileMenu implements Screen {
             avatarButtons[i].addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    controller.handleAvatarChange(avatarIndex + 1); // +1 to match your numbering
+                    controller.handleAvatarChange(avatarIndex + 1);
+                    GameAssetManager.getInstance().playSFX("uiclick");
                 }
             });
         }

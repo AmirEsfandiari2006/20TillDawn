@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.LoginMenuController;
+import Models.GameAssetManager;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -85,6 +86,7 @@ public class LoginMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleSignUpButton();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -92,6 +94,7 @@ public class LoginMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleLoginUser();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -99,6 +102,7 @@ public class LoginMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.loginAsGuest();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -106,6 +110,7 @@ public class LoginMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.forgetPass();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
     }

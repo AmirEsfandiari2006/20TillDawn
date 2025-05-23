@@ -10,6 +10,7 @@ public class Setting {
     private float musicVolume = 1.0f;
     private boolean sfxEnabled = true;
     private boolean grayscaleEnabled = false;
+    private final KeySettings keySettings = new KeySettings();
 
     private final Map<String, Integer> keyBindings = new HashMap<>();
 
@@ -84,4 +85,7 @@ public class Setting {
         return keyBindings;
     }
 
+    public KeySettings getKeySettings() {
+        return keySettings;
+    }
 }

@@ -214,6 +214,7 @@ public class Player {
         level++;
         gameController.setGameState(GameState.ABILITY_SELECTION);
         gameController.getAbilitySelectionController().showAbilitySelection();
+        GameAssetManager.getInstance().playSFX("powerUp");
     }
 
     public int getLevel() {

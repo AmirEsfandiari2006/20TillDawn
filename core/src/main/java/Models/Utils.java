@@ -11,6 +11,7 @@ public class Utils {
         protected void result(Object object) {
             System.out.println("OK clicked");
             this.hide();
+            GameAssetManager.getInstance().playSFX("uiclick");
         }
     };
     errorDialog.text(message);

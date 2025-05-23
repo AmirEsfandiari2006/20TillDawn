@@ -111,7 +111,7 @@ public class GameLauncher implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (button == KeySettings.getInstance().shoot) {
+        if (button == App.getInstance().getSettings().getKeySettings().shoot) {
             controller.getBulletController().handleWeaponShoot(screenX, screenY);
         }
         return false;

@@ -39,6 +39,7 @@ public class PauseController {
             public void clicked(InputEvent event, float x, float y) {
                 gameController.setGameState(GameState.PLAYING);
                 hidePauseMenu();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -46,6 +47,7 @@ public class PauseController {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.exit(0); // Or return to main menu
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -53,6 +55,7 @@ public class PauseController {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 App.getInstance().toggleGrayScale();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -60,6 +63,7 @@ public class PauseController {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 showAbilitiesDialog();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -69,6 +73,7 @@ public class PauseController {
                 hidePauseMenu();
                 gameController.setGameState(GameState.END_GAME);
                 gameController.getEndGameController().showEndScreen(gameController.getView().getStage(), "You Gave Up!", false);
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 
@@ -76,6 +81,7 @@ public class PauseController {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 showCheatDialog();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
 

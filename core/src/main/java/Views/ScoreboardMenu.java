@@ -76,6 +76,7 @@ public class ScoreboardMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleBackToMainMenu();
+                GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
     }
