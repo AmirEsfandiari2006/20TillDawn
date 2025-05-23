@@ -210,6 +210,12 @@ public class Player {
         return visible;
     }
 
+    public void increaseLevel() {
+        level++;
+        gameController.setGameState(GameState.ABILITY_SELECTION);
+        gameController.getAbilitySelectionController().showAbilitySelection();
+    }
+
     public int getLevel() {
         return level;
     }
@@ -222,11 +228,7 @@ public class Player {
         this.xp += amount;
         while (xp >= getXpNeededForNextLevel()) {
             xp -= getXpNeededForNextLevel(); // remove only this level’s XP
-            level++;
-
-            gameController.setGameState(GameState.ABILITY_SELECTION);
-            gameController.getAbilitySelectionController().showAbilitySelection();
-
+            increaseLevel();
         }
     }
 

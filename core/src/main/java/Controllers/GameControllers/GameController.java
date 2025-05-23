@@ -26,6 +26,7 @@ public class GameController {
     private BarController barController;
     private HitController hitController;
     private AbilitySelectionController abilitySelectionController;
+    private CheatController cheatController;
 
     private GameState gameState = GameState.PLAYING;
 
@@ -52,7 +53,7 @@ public class GameController {
     public void setView(GameLauncher view, OrthographicCamera camera) {
         this.view = view;
         this.player = new Player(this,selectedCharacter,selectedWeapon);
-        this.playerController = new PlayerController(player,camera,xpCoins);
+        this.playerController = new PlayerController(player,camera,xpCoins,this);
         this.worldController = new WorldController(playerController);
         this.treeController = new TreeController(camera, trees);
         this.bulletController = new BulletController(selectedWeapon,player,camera,monsters,xpCoins);
@@ -61,6 +62,7 @@ public class GameController {
         this.barController = new BarController(player);
         this.hitController = new HitController(player,monsters,monsterBullets,trees);
         this.abilitySelectionController = new AbilitySelectionController(this,player);
+        this.cheatController = new CheatController(this);
     }
 
     public void updateGame(float deltaTime , float elapsedTime) {
@@ -137,5 +139,9 @@ public class GameController {
 
     public void setView(GameLauncher view) {
         this.view = view;
+    }
+
+    public CheatController getCheatController() {
+        return cheatController;
     }
 }

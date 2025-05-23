@@ -4,6 +4,7 @@ import Models.*;
 import Models.Monsters.XpCoin;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,7 +26,10 @@ public class PlayerController {
     private final Texture lightMask = new Texture(Gdx.files.internal("whiteMask.png"));
     private final ArrayList<XpCoin> xpCoins;
 
-    public PlayerController(Player player, OrthographicCamera camera, ArrayList<XpCoin> xpCoins ) {
+    private final GameController gameController;
+
+    public PlayerController(Player player, OrthographicCamera camera, ArrayList<XpCoin> xpCoins, GameController gameController ) {
+        this.gameController = gameController;
         this.camera = camera;
         this.player = player;
         this.xpCoins = xpCoins;
@@ -117,6 +121,19 @@ public class PlayerController {
         float newX = player.getPlayerSprite().getX();
         float newY = player.getPlayerSprite().getY();
 
+        if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.ALT_RIGHT)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+                gameController.getCheatController().decreaseTime();
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+                gameController.getCheatController().increaseLevel();
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+                gameController.getCheatController().fullHealth();
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
+                gameController.getCheatController().unlimitedAmmo();
+            }
+        }
+
+        // --- Movement handling ---
         if (Gdx.input.isKeyPressed(KeySettings.getInstance().moveUp)) {
             newY += speed;
         }
@@ -135,10 +152,8 @@ public class PlayerController {
         reloadGun();
 
         player.updatePlayerCollisionRectangle();
-
         player.getPlayerSprite().setX(newX);
         player.getPlayerSprite().setY(newY);
-
         player.getCollisionRectangle().setPosition(newX, newY);
     }
 
@@ -182,12 +197,12 @@ public class PlayerController {
         float playerCenterX = player.getPlayerSprite().getX() + player.getPlayerSprite().getWidth() / 4;
         float playerCenterY = player.getPlayerSprite().getY() + player.getPlayerSprite().getHeight() / 8;
 
-        float maskWidth = 150;  // Set based on your image or desired light radius
+        float maskWidth = 150;
         float maskHeight = 150;
 
-        Main.getBatch().setColor(1, 1, 1, 0.2f); // Opacity of the light
+        Main.getBatch().setColor(1, 1, 1, 0.2f);
         Main.getBatch().draw(lightMask, playerCenterX - maskWidth / 2f, playerCenterY - maskHeight / 2f, maskWidth, maskHeight);
-        Main.getBatch().setColor(1, 1, 1, 1); // Reset color
+        Main.getBatch().setColor(1, 1, 1, 1);
     }
 
     private void updateTakingCoin() {

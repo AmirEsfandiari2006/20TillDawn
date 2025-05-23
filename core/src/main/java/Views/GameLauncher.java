@@ -173,4 +173,11 @@ public class GameLauncher implements Screen, InputProcessor {
         }
     }
 
+    public float getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(float elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
 }
