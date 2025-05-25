@@ -6,10 +6,13 @@ import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -39,6 +42,9 @@ public class TalentMenu implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
+
+        Texture bgTexture = new Texture(Gdx.files.internal("background.png"));
+        table.setBackground(new TextureRegionDrawable(new TextureRegion(bgTexture)));
 
         table.add(titleLabel).padBottom(20).row();
 

@@ -1,9 +1,11 @@
 package com.Final;
 
 import Controllers.RegisterMenuController;
+import Controllers.StartMenuController;
 import Models.App;
 import Models.GameAssetManager;
 import Views.RegisterMenu;
+import Views.StartMenu;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Cursor;
@@ -51,7 +53,7 @@ public class Main extends Game {
 
         main = this;
         batch = new SpriteBatch();
-        main.setScreen(new RegisterMenu(new RegisterMenuController(), GameAssetManager.getInstance().getSkin()));
+        main.setScreen(new StartMenu(new StartMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 
     @Override

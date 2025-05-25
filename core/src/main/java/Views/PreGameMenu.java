@@ -77,6 +77,7 @@ public class PreGameMenu implements Screen {
         mainTable.setFillParent(true);
         mainTable.center();
 
+
         // Load and set background image
         Texture bgTexture = new Texture(Gdx.files.internal("background.png"));
         mainTable.setBackground(new TextureRegionDrawable(new TextureRegion(bgTexture)));

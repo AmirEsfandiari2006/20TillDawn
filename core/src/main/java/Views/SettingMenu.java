@@ -7,12 +7,15 @@ import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -122,6 +125,9 @@ public class SettingMenu implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         table.center();
+
+        Texture bgTexture = new Texture(Gdx.files.internal("background.png"));
+        table.setBackground(new TextureRegionDrawable(new TextureRegion(bgTexture)));
 
         table.add(titleLabel).colspan(4).padBottom(20).row();
 

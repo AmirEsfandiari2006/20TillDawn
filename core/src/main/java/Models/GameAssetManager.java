@@ -84,6 +84,17 @@ public class GameAssetManager extends AssetManager {
         new TextureRegion(new Texture("Monsters/ElderDasher/ElderDeer3.png"))
         );
 
+    private final Animation<TextureRegion> thunderAnimation = new Animation<>(
+        0.1f,
+        new TextureRegion(new Texture("Thunder/Thunder_0.png")),
+        new TextureRegion(new Texture("Thunder/Thunder_1.png")),
+        new TextureRegion(new Texture("Thunder/Thunder_2.png")),
+        new TextureRegion(new Texture("Thunder/Thunder_3.png")),
+        new TextureRegion(new Texture("Thunder/Thunder_4.png")),
+        new TextureRegion(new Texture("Thunder/Thunder_5.png")),
+        new TextureRegion(new Texture("Thunder/Thunder_6.png"))
+
+    );
 
     public void queueMusic() {
         load("Musics/FirstTrack.mp3", Music.class);
@@ -247,5 +258,9 @@ public class GameAssetManager extends AssetManager {
 
     public Animation<TextureRegion> getDasherAnimation() {
         return dasherAnimation;
+    }
+
+    public Animation<TextureRegion> getThunderAnimation() {
+        return thunderAnimation;
     }
 }
