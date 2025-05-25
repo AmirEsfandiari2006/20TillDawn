@@ -3,8 +3,10 @@ package Controllers.GameControllers;
 import Models.CollisionRectangle;
 import Models.Monsters.*;
 import Models.Player;
+import Models.ShrinkingBarrier;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -83,6 +85,9 @@ public class MonsterController {
         if(!isBossFound()){
             gameController.setShrinkingBarrier(null);
         } else {
+            if(gameController.getShrinkingBarrier() == null) {
+                gameController.setShrinkingBarrier(new ShrinkingBarrier(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+            }
             gameController.getShrinkingBarrier().update(deltaTime,player);
             gameController.getShrinkingBarrier().render();
         }
@@ -127,7 +132,7 @@ public class MonsterController {
     public void drawMonsterCollisionBoxes() {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.RED); // Green for XP coins
+        shapeRenderer.setColor(Color.RED);
 
         for (Monster monster : monsters) {
             CollisionRectangle rect = monster.getCollisionRectangle();

@@ -9,7 +9,7 @@ import Models.Player;
 
 public class ShrinkingBarrier {
     private float x, y, width, height;
-    private float shrinkSpeed = 20f; // pixels per second
+    private float shrinkSpeed = 5f; // pixels per second
     private boolean active = true;
 
     private final float DAMAGE_COOLDOWN = 1f; // 1 sec delay between damage
@@ -41,12 +41,6 @@ public class ShrinkingBarrier {
             height = 10;
         }
 
-        // Check for collision with player
-        if (damageTimer >= DAMAGE_COOLDOWN && !getRectangle().contains(player.getCollisionRectangle().getX(), player.getCollisionRectangle().getY())) {
-            GameAssetManager.getInstance().playSFX("hitByEnemy");
-            player.setCurrentHealth(player.getCurrentHealth() - 1); // or use your existing damage method
-            damageTimer = 0f;
-        }
     }
 
     public void render() {

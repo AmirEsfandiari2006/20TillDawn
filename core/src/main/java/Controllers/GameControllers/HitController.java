@@ -23,7 +23,7 @@ public class HitController {
 
     private final ArrayList<Explosion> explosions = new ArrayList<>();
 
-    public HitController(Player player, ArrayList<Monster> monsters, ArrayList<MonsterBullet> monsterBullets, ArrayList<Tree> trees , GameController gameController) {
+    public HitController(Player player, ArrayList<Monster> monsters, ArrayList<MonsterBullet> monsterBullets, ArrayList<Tree> trees, GameController gameController) {
         this.gameController = gameController;
         this.player = player;
         this.monsters = monsters;
@@ -38,19 +38,20 @@ public class HitController {
         handleTreeHit();
         handleMonsterHit();
         handleMonsterBulletHit();
+        handleShrinkBarrierHit();
 
         updateExplosions();
     }
 
-    public void handleShrinkBarrierHit(){
+    public void handleShrinkBarrierHit() {
         if (player.isInvincible()) return;
 
         final int HIT_SHRINK_BARRIER_DAMAGE = 1;
         ShrinkingBarrier shrinkingBarrier = gameController.getShrinkingBarrier();
 
-        if ( shrinkingBarrier.getDamageTimer() >= shrinkingBarrier.getDAMAGE_COOLDOWN() && !shrinkingBarrier.getRectangle().contains(player.getCollisionRectangle().getX(), player.getCollisionRectangle().getY())) {
+        if (shrinkingBarrier != null && !shrinkingBarrier.getRectangle().contains(player.getCollisionRectangle().getX(), player.getCollisionRectangle().getY())) {
             GameAssetManager.getInstance().playSFX("hitByEnemy");
-            player.setCurrentHealth(player.getCurrentHealth() - HIT_SHRINK_BARRIER_DAMAGE); // or use your existing damage method
+            player.setCurrentHealth(player.getCurrentHealth() - HIT_SHRINK_BARRIER_DAMAGE);
             player.setInvincible(true);
         }
     }
@@ -71,14 +72,14 @@ public class HitController {
 
     }
 
-    public void handleMonsterHit(){
+    public void handleMonsterHit() {
         if (player.isInvincible()) return;
 
         final int HIT_MONSTER_DAMAGE = 1;
 
         for (Monster monster : monsters) {
 
-            if(monster.getCollisionRectangle().hasCollision(player.getCollisionRectangle())) {
+            if (monster.getCollisionRectangle().hasCollision(player.getCollisionRectangle())) {
                 GameAssetManager.getInstance().playSFX("hitByEnemy");
                 player.setCurrentHealth(player.getCurrentHealth() - HIT_MONSTER_DAMAGE);
                 player.setInvincible(true); // Activate invincibility
@@ -117,7 +118,7 @@ public class HitController {
 
     public void updateExplosions() {
         // Update explosions
-        for (Iterator<Explosion> it = explosions.iterator(); it.hasNext();) {
+        for (Iterator<Explosion> it = explosions.iterator(); it.hasNext(); ) {
             Explosion explosion = it.next();
             explosion.update(Gdx.graphics.getDeltaTime());
             if (explosion.isFinished()) {

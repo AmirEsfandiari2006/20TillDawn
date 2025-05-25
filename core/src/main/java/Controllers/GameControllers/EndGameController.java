@@ -28,11 +28,13 @@ public class EndGameController {
         Player player = gameController.getPlayer();
         if(gameController.getView().getElapsedTime() > (gameController.getSelectedTime() * 60)) {
             gameController.setGameState(GameState.END_GAME);
+            GameAssetManager.getInstance().playSFX("winning");
             showEndScreen(gameController.getView().getStage(), "Glory is Yours", true);
             isVictory = true;
         }
         if(player.getCurrentHealth() <= 0) {
             gameController.setGameState(GameState.END_GAME);
+            GameAssetManager.getInstance().playSFX("losing");
             showEndScreen(gameController.getView().getStage(), "You Died!", false);
             isVictory = false;
         }
