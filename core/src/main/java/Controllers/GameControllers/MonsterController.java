@@ -19,6 +19,8 @@ public class MonsterController {
     private final Random random = new Random();
 
 
+    private final GameController gameController;
+
     private final Player player;
     private final OrthographicCamera camera;
 
@@ -34,7 +36,10 @@ public class MonsterController {
     private float eyeBatTimer = 0f;
     private static final float EYEBAT_SPAWN_TIME = 10f;
 
-    public MonsterController(Player player, int gameTotalTime,ArrayList<Monster> monsters, ArrayList<XpCoin> xpCoins, OrthographicCamera camera, ArrayList<MonsterBullet> monsterBullets) {
+    private boolean isBossSpawned = false;
+
+    public MonsterController(Player player, int gameTotalTime,ArrayList<Monster> monsters, ArrayList<XpCoin> xpCoins, OrthographicCamera camera, ArrayList<MonsterBullet> monsterBullets, GameController gameController) {
+        this.gameController = gameController;
         this.player = player;
         this.gameTotalTime = (gameTotalTime * 60);
         this.monsters = monsters;
@@ -54,7 +59,7 @@ public class MonsterController {
         if ((elapsedTime > ((float) gameTotalTime / 4)) && eyeBatTimer >= EYEBAT_SPAWN_TIME) {
             for (int i = 0; i < (((4 * elapsedTime) - gameTotalTime + 30) / 30); i++) {
                 spawnEyeBat();
-            }
+            };
             eyeBatTimer = 0f;
         }
 
@@ -70,10 +75,24 @@ public class MonsterController {
             }
         }
 
+        if( elapsedTime > ((float) gameTotalTime / 2) && !isBossSpawned) {
+            isBossSpawned = true;
+            spawnElderDasher();
+        }
+
+        if(!isBossFound()){
+            gameController.setShrinkingBarrier(null);
+        } else {
+            gameController.getShrinkingBarrier().update(deltaTime,player);
+            gameController.getShrinkingBarrier().render();
+        }
+
         for (MonsterBullet bullet : monsterBullets) {
             bullet.update(deltaTime);
             bullet.render(Main.getBatch());
         }
+
+
 
         updateCoins(Gdx.graphics.getDeltaTime());
 
@@ -89,6 +108,13 @@ public class MonsterController {
         float x = random.nextFloat() * (Main.WORLD_WIDTH - 50);
         float y = random.nextFloat() * (Main.WORLD_HEIGHT - 50);
         monsters.add(new EyeBat(x, y));
+    }
+
+    public void spawnElderDasher(){
+        float x = random.nextFloat() * (Main.WORLD_WIDTH - 50);
+        float y = random.nextFloat() * (Main.WORLD_HEIGHT - 50);
+        monsters.add(new ElderDasher(x, y));
+        gameController.activeShrinkBarrier();
     }
 
     private void updateCoins(float deltaTime) {
@@ -120,6 +146,10 @@ public class MonsterController {
             shapeRenderer.rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
         }
         shapeRenderer.end();
+    }
+
+    public boolean isBossFound(){
+        return monsters.stream().anyMatch(monster -> monster instanceof ElderDasher);
     }
 
 }

@@ -5,6 +5,7 @@ import Models.GameAssetManager;
 import Models.Monsters.Monster;
 import Models.Monsters.MonsterBullet;
 import Models.Player;
+import Models.ShrinkingBarrier;
 import Models.Tree;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
@@ -14,6 +15,7 @@ import java.util.Iterator;
 
 public class HitController {
 
+    private final GameController gameController;
     private final Player player;
     private final ArrayList<Monster> monsters;
     private final ArrayList<MonsterBullet> monsterBullets;
@@ -21,7 +23,8 @@ public class HitController {
 
     private final ArrayList<Explosion> explosions = new ArrayList<>();
 
-    public HitController(Player player, ArrayList<Monster> monsters, ArrayList<MonsterBullet> monsterBullets, ArrayList<Tree> trees) {
+    public HitController(Player player, ArrayList<Monster> monsters, ArrayList<MonsterBullet> monsterBullets, ArrayList<Tree> trees , GameController gameController) {
+        this.gameController = gameController;
         this.player = player;
         this.monsters = monsters;
         this.monsterBullets = monsterBullets;
@@ -37,6 +40,19 @@ public class HitController {
         handleMonsterBulletHit();
 
         updateExplosions();
+    }
+
+    public void handleShrinkBarrierHit(){
+        if (player.isInvincible()) return;
+
+        final int HIT_SHRINK_BARRIER_DAMAGE = 1;
+        ShrinkingBarrier shrinkingBarrier = gameController.getShrinkingBarrier();
+
+        if ( shrinkingBarrier.getDamageTimer() >= shrinkingBarrier.getDAMAGE_COOLDOWN() && !shrinkingBarrier.getRectangle().contains(player.getCollisionRectangle().getX(), player.getCollisionRectangle().getY())) {
+            GameAssetManager.getInstance().playSFX("hitByEnemy");
+            player.setCurrentHealth(player.getCurrentHealth() - HIT_SHRINK_BARRIER_DAMAGE); // or use your existing damage method
+            player.setInvincible(true);
+        }
     }
 
     public void handleTreeHit() {

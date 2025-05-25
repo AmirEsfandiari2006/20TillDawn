@@ -44,6 +44,7 @@ public class TalentMenuController {
         table.add(new Label("Alt + 2: Increase Level", GameAssetManager.getInstance().getSkin())).left().padBottom(10).row();
         table.add(new Label("Alt + 3: Full Health", GameAssetManager.getInstance().getSkin())).left().padBottom(10).row();
         table.add(new Label("Alt + 4: Unlimited Ammo", GameAssetManager.getInstance().getSkin())).left().padBottom(10).row();
+        table.add(new Label("Alt + 5: Spawn Boss", GameAssetManager.getInstance().getSkin())).left().padBottom(10).row();
 
         dialog.getContentTable().add(table).pad(20);
         dialog.button("OK");

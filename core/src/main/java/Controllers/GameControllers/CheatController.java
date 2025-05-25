@@ -26,4 +26,9 @@ public class CheatController {
         gameController.getPlayer().getWeapon().setCurrentAmmo(Integer.MAX_VALUE);
     }
 
+    public void spawnBoss(){
+        gameController.getMonsterController().spawnElderDasher();
+        gameController.activeShrinkBarrier();
+    }
+
 }

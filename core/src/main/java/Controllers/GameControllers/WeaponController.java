@@ -1,5 +1,8 @@
 package Controllers.GameControllers;
 
+import Models.App;
+import Models.CursorUtils;
+import Models.Monsters.Monster;
 import Models.Player;
 import Models.Weapon;
 import com.Final.Main;
@@ -8,13 +11,20 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
+import java.util.ArrayList;
+
 public class WeaponController {
 
+    private final CursorUtils cursorUtils = new CursorUtils();
+
+
+    private final GameController gameController;
     private final Player player;
     private final Weapon weapon;
     private final OrthographicCamera camera;
 
-    public WeaponController(Weapon weapon, Player player, OrthographicCamera camera) {
+    public WeaponController(Weapon weapon, Player player, OrthographicCamera camera, GameController gameController) {
+        this.gameController = gameController;
         this.player = player;
         this.weapon = weapon;
         this.camera = camera;
@@ -113,6 +123,58 @@ public class WeaponController {
 
         weaponSprite.setRotation(angle);
     }
+
+
+    public void handleAutoAimShoot() {
+        if (!App.getInstance().getSettings().isAutoAimEnabled()) return;
+
+        ArrayList<Monster> monsters = gameController.getMonsters();
+        if (monsters.isEmpty()) return;
+
+        // Get player center in world space
+        Sprite playerSprite = player.getPlayerSprite();
+        float playerCenterX = playerSprite.getX() + playerSprite.getWidth() / 2f;
+        float playerCenterY = playerSprite.getY() + playerSprite.getHeight() / 2f;
+
+        // Find nearest monster
+        Monster nearest = null;
+        float minDist = Float.MAX_VALUE;
+
+        for (Monster monster : monsters) {
+            Sprite mSprite = monster.getSprite();
+            float monsterCenterX = mSprite.getX() + mSprite.getWidth() / 2f;
+            float monsterCenterY = mSprite.getY() + mSprite.getHeight() / 2f;
+
+            float dx = monsterCenterX - playerCenterX;
+            float dy = monsterCenterY - playerCenterY;
+            float distSq = dx * dx + dy * dy;
+
+            if (distSq < minDist) {
+                minDist = distSq;
+                nearest = monster;
+            }
+        }
+
+        if (nearest == null) return;
+
+        // Get world position of the monster's center
+        Sprite monsterSprite = nearest.getSprite();
+        float monsterWorldX = monsterSprite.getX() + monsterSprite.getWidth() / 2f;
+        float monsterWorldY = monsterSprite.getY() + monsterSprite.getHeight() / 2f;
+
+        // Convert world target to screen coordinates
+        Vector3 monsterScreenPos = camera.project(new Vector3(monsterWorldX, monsterWorldY, 0));
+        int screenX = (int) monsterScreenPos.x;
+        int screenY = Gdx.graphics.getHeight() - (int) monsterScreenPos.y;
+
+        // Move cursor to this screen position (optional)
+        cursorUtils.moveCursorToScreen(screenX, screenY);
+
+        // Shoot using correct screen coords
+        handleWeaponRotation(screenX, screenY);
+        gameController.getBulletController().handleWeaponShoot(screenX, screenY);
+    }
+
 
 
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,6 +18,7 @@ public class GameAssetManager extends AssetManager {
 
     private Music currentMusic;
     private final Map<String, Sound> soundEffects = new HashMap<>();
+    private Texture redPixel;
 
     private final Animation<Texture> character1Animation = new Animation<>(
         0.1f,
@@ -74,6 +76,14 @@ public class GameAssetManager extends AssetManager {
         new TextureRegion(new Texture("Effects/ExplosionFX/ExplosionFX_5.png"))
     );
 
+    private final Animation<TextureRegion> dasherAnimation = new Animation<>(
+        0.1f,
+        new TextureRegion(new Texture("Monsters/ElderDasher/ElderDeer0.png")),
+        new TextureRegion(new Texture("Monsters/ElderDasher/ElderDeer1.png")),
+        new TextureRegion(new Texture("Monsters/ElderDasher/ElderDeer2.png")),
+        new TextureRegion(new Texture("Monsters/ElderDasher/ElderDeer3.png"))
+        );
+
 
     public void queueMusic() {
         load("Musics/FirstTrack.mp3", Music.class);
@@ -95,6 +105,18 @@ public class GameAssetManager extends AssetManager {
         soundEffects.put("losing", Gdx.audio.newSound(Gdx.files.internal("SFXs/YouLose.wav")));
 
 
+    }
+
+    public void loadRedPixel() {
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(1, 0, 0, 1); // Red
+        pixmap.fill();
+        redPixel = new Texture(pixmap);
+        pixmap.dispose();
+    }
+
+    public Texture getRedPixel() {
+        return redPixel;
     }
 
     public void finishLoadingAssets() {
@@ -223,4 +245,7 @@ public class GameAssetManager extends AssetManager {
         return instance;
     }
 
+    public Animation<TextureRegion> getDasherAnimation() {
+        return dasherAnimation;
+    }
 }

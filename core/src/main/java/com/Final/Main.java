@@ -28,6 +28,7 @@ public class Main extends Game {
 
         GameAssetManager.getInstance().queueMusic();
         GameAssetManager.getInstance().loadSoundEffects();
+        GameAssetManager.getInstance().loadRedPixel();
 
         GameAssetManager.getInstance().finishLoadingAssets();
 

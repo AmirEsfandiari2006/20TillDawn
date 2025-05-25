@@ -11,6 +11,7 @@ public class Setting {
     private boolean sfxEnabled = true;
     private boolean grayscaleEnabled = false;
     private final KeySettings keySettings = new KeySettings();
+    private boolean autoAimEnabled = true;
 
     private final Map<String, Integer> keyBindings = new HashMap<>();
 
@@ -88,4 +89,13 @@ public class Setting {
     public KeySettings getKeySettings() {
         return keySettings;
     }
+
+    public void toggleAutoAim() {
+        autoAimEnabled = !autoAimEnabled;
+    }
+
+    public boolean isAutoAimEnabled() {
+        return autoAimEnabled;
+    }
+
 }

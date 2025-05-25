@@ -141,7 +141,14 @@ public class PlayerController {
                 gameController.getCheatController().fullHealth();
             } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
                 gameController.getCheatController().unlimitedAmmo();
+            } else if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)) {
+                gameController.getCheatController().spawnBoss();
             }
+        }
+
+        if(Gdx.input.isKeyJustPressed(App.getInstance().getSettings().getKeySettings().autoAim)) {
+            gameController.getWeaponController().handleAutoAimShoot();
+
         }
 
         // --- Movement handling ---

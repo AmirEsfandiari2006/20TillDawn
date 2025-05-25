@@ -51,6 +51,7 @@ public class KeySettingsMenu implements Screen {
         controller.addKeyBindButton(table, "Move Left", "moveLeft");
         controller.addKeyBindButton(table, "Move Right", "moveRight");
         controller.addKeyBindButton(table, "Reload", "reload");
+        controller.addKeyBindButton(table, "Auto Aim", "autoAim");
 
         TextButton backButton = new TextButton("Back", GameAssetManager.getInstance().getSkin());
         backButton.addListener(new ClickListener() {

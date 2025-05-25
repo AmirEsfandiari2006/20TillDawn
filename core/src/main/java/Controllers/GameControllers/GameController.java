@@ -4,11 +4,13 @@ import Models.Monsters.Monster;
 import Models.Monsters.MonsterBullet;
 import Models.Monsters.XpCoin;
 import Models.Player;
+import Models.ShrinkingBarrier;
 import Models.Tree;
 import Models.Weapon;
 import Models.enums.CharacterType;
 import Models.enums.GameState;
 import Views.GameLauncher;
+import com.Final.Main;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import java.util.ArrayList;
@@ -43,6 +45,8 @@ public class GameController {
     private final ArrayList<XpCoin> xpCoins = new ArrayList<>();
     private final ArrayList<Tree>  trees = new ArrayList<>();
 
+    private ShrinkingBarrier shrinkingBarrier;
+
 
     public GameController(CharacterType selectedCharacter,Weapon weapon, int selectedTime) {
         this.selectedCharacter = selectedCharacter;
@@ -57,10 +61,10 @@ public class GameController {
         this.worldController = new WorldController(playerController);
         this.treeController = new TreeController(camera, trees);
         this.bulletController = new BulletController(selectedWeapon,player,camera,monsters,xpCoins);
-        this.weaponController = new WeaponController(this.selectedWeapon,player,camera);
-        this.monsterController = new MonsterController(player,selectedTime,monsters,xpCoins, camera,monsterBullets);
+        this.weaponController = new WeaponController(this.selectedWeapon,player,camera,this);
+        this.monsterController = new MonsterController(player,selectedTime,monsters,xpCoins, camera,monsterBullets,this);
         this.barController = new BarController(player);
-        this.hitController = new HitController(player,monsters,monsterBullets,trees);
+        this.hitController = new HitController(player,monsters,monsterBullets,trees,this);
         this.abilitySelectionController = new AbilitySelectionController(this,player);
         this.cheatController = new CheatController(this);
         this.pauseController = new PauseController(this,view.getStage());
@@ -76,7 +80,6 @@ public class GameController {
         monsterController.update(deltaTime,elapsedTime);
         hitController.update();
         abilitySelectionController.update();
-
         endGameController.checkGameEnded();
     }
 
@@ -148,5 +151,19 @@ public class GameController {
         return endGameController;
     }
 
+    public void activeShrinkBarrier(){
+        shrinkingBarrier = new ShrinkingBarrier(Main.WORLD_WIDTH,Main.WORLD_HEIGHT);
+    }
 
+    public ShrinkingBarrier getShrinkingBarrier() {
+        return shrinkingBarrier;
+    }
+
+    public void setShrinkingBarrier(ShrinkingBarrier barrier) {
+        shrinkingBarrier = barrier;
+    }
+
+    public ArrayList<Monster> getMonsters() {
+        return monsters;
+    }
 }

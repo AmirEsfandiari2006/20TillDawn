@@ -77,6 +77,7 @@ public class KeySettingsController {
             case "moveLeft" -> "Move Left";
             case "moveRight" -> "Move Right";
             case "reload" -> "Reload";
+            case "autoAim" -> "Auto Aim";
             default -> field;
         };
     }

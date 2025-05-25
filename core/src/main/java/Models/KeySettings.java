@@ -13,4 +13,5 @@ public class KeySettings {
 
     private static KeySettings instance;
 
+    public int autoAim = Input.Keys.SPACE;
 }
