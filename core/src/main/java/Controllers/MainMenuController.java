@@ -1,10 +1,14 @@
 package Controllers;
 
-import Models.App;
-import Models.GameAssetManager;
-import Models.Utils;
+import Controllers.GameControllers.GameController;
+import Models.*;
+import Models.Monsters.Monster;
+import Models.Monsters.MonsterBullet;
+import Models.Monsters.XpCoin;
+import Models.enums.GameState;
 import Views.*;
 import com.Final.Main;
+import com.sun.source.util.Trees;
 
 import java.util.MissingFormatArgumentException;
 
@@ -42,5 +46,41 @@ public class MainMenuController {
 
     public void handleTalentButton() {
         Main.getMain().setScreen(new TalentMenu(new TalentMenuController(), GameAssetManager.getInstance().getSkin()));
+    }
+
+    public void loadGame() {
+        SaveData saveData = SaveData.loadGame();
+
+        if(saveData == null) {
+            Utils.showErrorDialog(view.getStage(),"Error","No saved game found.");
+            return;
+        }
+
+        GameController gameController = new GameController(
+            saveData.getSelectedCharacter(),
+            saveData.getSelectedWeapon(),
+            saveData.getSelectedTime()
+        );
+
+        gameController.setGameState(GameState.PLAYING);
+        gameController.setPlayer(saveData.getPlayer());
+        gameController.setMonsters(saveData.getMonsters());
+        gameController.setMonsterBullets(saveData.getMonsterBullets());
+        gameController.setXpCoins(saveData.getXpCoins());
+        gameController.setTrees(saveData.getTrees());
+
+        gameController.getPlayer().initGraphic();
+        for(Monster monster: gameController.getMonsters()) {monster.initGraphic();}
+        for(MonsterBullet monsterBullet: gameController.getMonsterBullets()) {monsterBullet.initGraphic();}
+        for(XpCoin xpCoin: gameController.getXpCoins()){xpCoin.initGraphic();}
+
+        gameController.getTrees().clear();
+        for(Tree trees: gameController.getTrees()) {trees.initGraphic();}
+
+        GameLauncher gameLauncher = new GameLauncher(gameController,GameAssetManager.getInstance().getSkin());
+
+        gameLauncher.setElapsedTime(saveData.getElapsedTime());
+
+        Main.getMain().setScreen(gameLauncher);
     }
 }

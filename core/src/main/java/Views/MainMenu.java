@@ -164,6 +164,13 @@ public class MainMenu implements Screen {
             }
         });
 
+        loadGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.loadGame();
+                GameAssetManager.getInstance().playSFX("uiclick");
+            }
+        });
     }
 
 

@@ -2,7 +2,9 @@ package Models.enums;
 
 import Models.Player;
 
-public enum Ability {
+import java.io.Serializable;
+
+public enum Ability implements Serializable {
 
     VITALITY("Vitality", "Increases the health of player by one"),
     DAMAGER("Damager", "Increases player damage by 25% for 10 seconds"),
@@ -15,6 +17,8 @@ public enum Ability {
 
     private final String name;
     private final String description;
+
+    private static final long serialVersionUID = 1L;
 
 
     Ability(String name, String description) {

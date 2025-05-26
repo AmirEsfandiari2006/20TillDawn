@@ -3,9 +3,15 @@ package Models;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Tree {
+import java.io.Serial;
+import java.io.Serializable;
 
-    private final Sprite treeSprite = new Sprite(new Texture("Tree/tree1.png"));
+public class Tree implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+
+    private transient Sprite treeSprite = new Sprite(new Texture("Tree/tree1.png"));
     private final CollisionRectangle collisionRectangle ;
     private float time = 3;
 
@@ -28,5 +34,9 @@ public class Tree {
 
     public CollisionRectangle getCollisionRectangle() {
         return collisionRectangle;
+    }
+
+    public void initGraphic(){
+        treeSprite = new Sprite(new Texture("Tree/tree1.png"));
     }
 }

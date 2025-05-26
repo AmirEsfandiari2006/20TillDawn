@@ -1,6 +1,8 @@
 package Models.enums;
 
-public enum CharacterType {
+import java.io.Serializable;
+
+public enum CharacterType implements Serializable {
 
     SHANA("Shana",4,4),
     DIAMOND("Diamond",7,1),
@@ -9,10 +11,14 @@ public enum CharacterType {
     DASHER("Dasher",2,10),
 
     ;
+    private static final long serialVersionUID = 1L;
 
     private final String name;
     private final int health;
     private final int speed;
+
+
+
 
     CharacterType(String name, int health, int speed) {
         this.name = name;

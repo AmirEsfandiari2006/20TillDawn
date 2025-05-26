@@ -6,10 +6,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
+import java.io.Serial;
+import java.io.Serializable;
 
-public class XpCoin {
 
-    private final Sprite sprite;
+public class XpCoin implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private transient Sprite sprite;
     private final CollisionRectangle collisionRectangle;
     private boolean collected = false;
 
@@ -51,5 +56,9 @@ public class XpCoin {
         return new Vector2(sprite.getX(), sprite.getY());
     }
 
+    public void initGraphic(){
+        this.sprite = new Sprite(new Texture("XpCoin.png"));
+        this.sprite.setSize(10,10);
+    }
 
 }

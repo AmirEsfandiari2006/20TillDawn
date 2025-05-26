@@ -3,7 +3,13 @@ package Models;
 import Models.enums.WeaponType;
 import com.badlogic.gdx.Gdx;
 
-public class Weapon {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Weapon implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
 
 
     private final WeaponType type;
@@ -77,5 +83,9 @@ public class Weapon {
 
     public void setReloadTimer(float reloadTimer) {
         this.reloadTimer = reloadTimer;
+    }
+
+    public void initGraphic(){
+
     }
 }

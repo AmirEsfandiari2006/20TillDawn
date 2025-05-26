@@ -1,21 +1,24 @@
 package Controllers.GameControllers;
 
+import Models.*;
 import Models.Monsters.Monster;
 import Models.Monsters.MonsterBullet;
 import Models.Monsters.XpCoin;
-import Models.Player;
-import Models.ShrinkingBarrier;
-import Models.Tree;
-import Models.Weapon;
 import Models.enums.CharacterType;
 import Models.enums.GameState;
 import Views.GameLauncher;
 import com.Final.Main;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
+import java.io.*;
+
+
 import java.util.ArrayList;
 
-public class GameController {
+public class GameController implements Serializable{
+
+    @Serial
+    private static final long serialVersionUID = 1L;
     private GameLauncher view;
     private OrthographicCamera camera;
 
@@ -40,10 +43,10 @@ public class GameController {
 
     private Player player;
 
-    private final ArrayList<Monster> monsters = new ArrayList<>();
-    private final ArrayList<MonsterBullet> monsterBullets = new ArrayList<>();
-    private final ArrayList<XpCoin> xpCoins = new ArrayList<>();
-    private final ArrayList<Tree>  trees = new ArrayList<>();
+    private  ArrayList<Monster> monsters = new ArrayList<>();
+    private  ArrayList<MonsterBullet> monsterBullets = new ArrayList<>();
+    private  ArrayList<XpCoin> xpCoins = new ArrayList<>();
+    private  ArrayList<Tree>  trees = new ArrayList<>();
 
     private ShrinkingBarrier shrinkingBarrier;
 
@@ -165,5 +168,130 @@ public class GameController {
 
     public ArrayList<Monster> getMonsters() {
         return monsters;
+    }
+
+    public void setCamera(OrthographicCamera camera) {
+        this.camera = camera;
+    }
+
+    public void setPlayerController(PlayerController playerController) {
+        this.playerController = playerController;
+    }
+
+    public void setWorldController(WorldController worldController) {
+        this.worldController = worldController;
+    }
+
+    public void setTreeController(TreeController treeController) {
+        this.treeController = treeController;
+    }
+
+    public void setBulletController(BulletController bulletController) {
+        this.bulletController = bulletController;
+    }
+
+    public void setWeaponController(WeaponController weaponController) {
+        this.weaponController = weaponController;
+    }
+
+    public void setMonsterController(MonsterController monsterController) {
+        this.monsterController = monsterController;
+    }
+
+    public void setBarController(BarController barController) {
+        this.barController = barController;
+    }
+
+    public void setHitController(HitController hitController) {
+        this.hitController = hitController;
+    }
+
+    public void setAbilitySelectionController(AbilitySelectionController abilitySelectionController) {
+        this.abilitySelectionController = abilitySelectionController;
+    }
+
+    public void setCheatController(CheatController cheatController) {
+        this.cheatController = cheatController;
+    }
+
+    public void setPauseController(PauseController pauseController) {
+        this.pauseController = pauseController;
+    }
+
+    public void setEndGameController(EndGameController endGameController) {
+        this.endGameController = endGameController;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setMonsters(ArrayList<Monster> monsters) {
+        this.monsters = monsters;
+    }
+
+    public ArrayList<MonsterBullet> getMonsterBullets() {
+        return monsterBullets;
+    }
+
+    public void setMonsterBullets(ArrayList<MonsterBullet> monsterBullets) {
+        this.monsterBullets = monsterBullets;
+    }
+
+    public void setXpCoins(ArrayList<XpCoin> xpCoins) {
+        this.xpCoins = xpCoins;
+    }
+
+    public void setTrees(ArrayList<Tree> trees) {
+        this.trees = trees;
+    }
+
+
+    public void saveGame() {
+        SaveData saveData = new SaveData(
+            gameState, selectedCharacter, selectedWeapon, selectedTime,
+            player, monsters, monsterBullets, xpCoins, trees, (int) view.getElapsedTime()
+        );
+
+        String username = App.getInstance().getCurrentUser().getUsername();
+        String dirPath = "data";
+        String filePath = dirPath + "/" + username + ".save";
+
+        // Create directory if it doesn't exist
+        File dir = new File(dirPath);
+        if (!dir.exists()) {
+            dir.mkdirs(); // creates the directory and any parent dirs if needed
+        }
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            oos.writeObject(saveData);
+            System.out.println("Game saved successfully!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
+    }
+
+    public HitController getHitController() {
+        return hitController;
+    }
+
+    public CharacterType getSelectedCharacter() {
+        return selectedCharacter;
+    }
+
+    public Weapon getSelectedWeapon() {
+        return selectedWeapon;
+    }
+
+    public ArrayList<XpCoin> getXpCoins() {
+        return xpCoins;
+    }
+
+    public ArrayList<Tree> getTrees() {
+        return trees;
     }
 }

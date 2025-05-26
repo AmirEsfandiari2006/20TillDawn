@@ -8,13 +8,20 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class ElderDasher implements Monster {
-    private final Sprite sprite;
+import java.io.Serial;
+import java.io.Serializable;
+
+public class ElderDasher implements Monster, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+
+    private transient Sprite sprite;
     private  float x, y;
     private int health = 400;
     private boolean facingRight = true;
 
-    private final Animation<TextureRegion> animation;
+    private transient Animation<TextureRegion> animation;
     private float animationTimer;
     private float dashTimer;
 
@@ -141,4 +148,10 @@ public class ElderDasher implements Monster {
         this.x = x;
         this.y = y;
     }
+
+    public void initGraphic(){
+        animation = GameAssetManager.getInstance().getDasherAnimation();
+        sprite = new Sprite(animation.getKeyFrame(0));
+    }
+
 }

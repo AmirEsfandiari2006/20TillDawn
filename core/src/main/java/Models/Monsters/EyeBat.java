@@ -8,14 +8,20 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class EyeBat implements Monster {
+import java.io.Serial;
+import java.io.Serializable;
 
-    private final Sprite sprite;
+public class EyeBat implements Monster, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+
+    private transient Sprite sprite;
     private float x, y;
     private int health = 50;
     private boolean facingRight = true;
 
-    private final Animation<TextureRegion> animation;
+    private transient Animation<TextureRegion> animation;
     private float animationTimer = 0f;
     private float fireTimer = 0f;
 
@@ -122,4 +128,10 @@ public class EyeBat implements Monster {
         this.x = x;
         this.y = y;
     }
+
+    public void initGraphic(){
+        animation = GameAssetManager.getInstance().getEyeBatAnimation();
+        this.sprite = new Sprite(animation.getKeyFrame(0));
+    }
+
 }

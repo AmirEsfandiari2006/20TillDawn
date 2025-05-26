@@ -3,7 +3,9 @@ package Models.enums;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public enum WeaponType {
+import java.io.Serializable;
+
+public enum WeaponType implements Serializable {
 
     REVOLVER(new Sprite(new Texture("Weapons/Revolver.png")),20,1,1,6),
     SHOTGUN(new Sprite(new Texture("Weapons/Shotgun.png")),10,4,1,2),
@@ -11,7 +13,10 @@ public enum WeaponType {
 
     ;
 
-    private final Sprite sprite;
+    private static final long serialVersionUID = 1L;
+
+
+    private final transient Sprite sprite;
     private final int damage;
     private final int projectTile;
     private final int timeReload;
@@ -44,4 +49,5 @@ public enum WeaponType {
     public Sprite getSprite() {
         return sprite;
     }
+
 }

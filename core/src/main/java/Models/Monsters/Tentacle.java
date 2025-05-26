@@ -8,14 +8,20 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Tentacle implements Monster {
-    private final Sprite sprite;
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Tentacle implements Monster, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private transient Sprite sprite;
     private float x, y;
     private int health = 25;
 
-    private final Animation<Texture> spawnAnimation;
-    private final Animation<Texture> moveAnimation;
-    private Animation<Texture> currentAnimation;
+    private transient Animation<Texture> spawnAnimation;
+    private transient Animation<Texture> moveAnimation;
+    private transient Animation<Texture> currentAnimation;
 
     private float animationTimer = 0f;
     private boolean spawning = true;
@@ -104,6 +110,15 @@ public class Tentacle implements Monster {
         this.x = x;
         this.y = y;
     }
+
+    public void initGraphic(){
+        spawnAnimation = GameAssetManager.getInstance().getTentacleSpawnAnimation();
+        moveAnimation = GameAssetManager.getInstance().getTentacleMoveAnimation();
+        currentAnimation = spawnAnimation;
+        this.spawning = false;
+        this.sprite = new Sprite(spawnAnimation.getKeyFrame(2));
+    }
+
 }
 
 

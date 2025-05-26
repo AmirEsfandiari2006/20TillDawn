@@ -6,8 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class MonsterBullet {
-    private final Sprite sprite = new Sprite(new Texture("Monsters/EyeBat/monsterBullet.png"));
+import java.io.Serial;
+import java.io.Serializable;
+
+public class MonsterBullet implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private transient Sprite sprite = new Sprite(new Texture("Monsters/EyeBat/monsterBullet.png"));
     private final float speed = 200f;
     private final CollisionRectangle collisionRectangle;
     private float dx, dy;
@@ -57,5 +63,10 @@ public class MonsterBullet {
 
     public void setDy(float dy) {
         this.dy = dy;
+    }
+
+    public void initGraphic() {
+        sprite = new Sprite(new Texture("Monsters/EyeBat/monsterBullet.png"));
+        sprite.setSize(10, 10);
     }
 }

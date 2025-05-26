@@ -1,6 +1,13 @@
 package Models;
 
-public class CollisionRectangle {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class CollisionRectangle implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+
     private float x,y;
     private float width,height;
 

@@ -17,4 +17,5 @@ public interface Monster {
     float getY();
     void setY(float y);
     void setPosition(float x, float y);
+    void initGraphic();
 }

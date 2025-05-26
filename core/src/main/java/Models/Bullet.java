@@ -5,8 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Bullet {
-    private final Sprite bulletSprite = new Sprite(new Texture("bullet.png"));
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Bullet implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private transient Sprite bulletSprite = new Sprite(new Texture("bullet.png"));
     private final int damage;
     private final CollisionRectangle collisionRectangle;
     private final float dx, dy;
@@ -51,6 +57,10 @@ public class Bullet {
 
     public int getDamage() {
         return damage;
+    }
+
+    public void initGraphic(){
+        bulletSprite = new Sprite(new Texture("bullet.png"));
     }
 }
 

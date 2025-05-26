@@ -10,14 +10,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player {
-    private final Texture playerTexture = new Texture("Characters/1/idle1.png");
-    private final Sprite playerSprite = new Sprite(playerTexture);
+public class Player  implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-    private Texture lightMask;
-    private Sprite lightSprite;
+
+    private transient Texture playerTexture = new Texture("Characters/1/idle1.png");
+    private transient Sprite playerSprite = new Sprite(playerTexture);
+
+    private transient Texture lightMask;
+    private transient Sprite lightSprite;
 
     private final CharacterType characterType;
     private final Weapon weapon;
@@ -43,7 +49,7 @@ public class Player {
     private boolean isIdle = true;
     private boolean isRunning = false;
 
-    private final GameController gameController;
+    private final transient GameController gameController;
 
     private float speedBoostTimer = 0f;
     private float damageBoostTimer = 0f;
@@ -288,5 +294,10 @@ public class Player {
         }
     }
 
+    public void initGraphic(){
+        playerTexture = new Texture("Characters/1/idle1.png");
+        playerSprite = new Sprite(playerTexture);
+        initLightEffect();
+    }
 
 }

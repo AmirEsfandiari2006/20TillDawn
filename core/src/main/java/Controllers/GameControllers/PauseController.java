@@ -1,9 +1,12 @@
 package Controllers.GameControllers;
 
+import Controllers.MainMenuController;
 import Models.App;
 import Models.GameAssetManager;
 import Models.enums.GameState;
 import Models.enums.Ability;
+import Views.MainMenu;
+import com.Final.Main;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -46,7 +49,8 @@ public class PauseController {
         saveAndQuitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.exit(0);
+                gameController.saveGame();
+                Main.getMain().setScreen(new MainMenu(new MainMenuController(),GameAssetManager.getInstance().getSkin()));
                 GameAssetManager.getInstance().playSFX("uiclick");
             }
         });
