@@ -26,6 +26,7 @@ public class StartMenu implements Screen {
 
     private Texture bgTexture;
     private Texture logoTexture;
+    private Texture divider;
 
     public StartMenu(StartMenuController controller, Skin skin) {
         this.controller = controller;
@@ -45,13 +46,18 @@ public class StartMenu implements Screen {
 
 
         logoTexture = new Texture(Gdx.files.internal("logo.png"));
+        divider = new Texture(Gdx.files.internal("divider.png"));
+
 
         bgTexture = new Texture(Gdx.files.internal("startBackground.png"));
         table.setBackground(new TextureRegionDrawable(new TextureRegion(bgTexture)));
 
         Image titleLogo = new Image(logoTexture);
+        Image diverImage = new Image(divider);
 
-        table.add(titleLogo).padBottom(100).row();
+
+        table.add(titleLogo).padBottom(20).row();
+        table.add(diverImage).padBottom(20).row();
         table.add(startButton).colspan(2).padBottom(20).row();
         table.padBottom(150);
 
