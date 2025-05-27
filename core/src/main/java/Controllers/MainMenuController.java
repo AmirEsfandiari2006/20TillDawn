@@ -51,6 +51,11 @@ public class MainMenuController {
     public void loadGame() {
         SaveData saveData = SaveData.loadGame();
 
+        if(App.getInstance().getCurrentUser().getUsername().equals("Guest")) {
+            Utils.showErrorDialog(view.getStage(),"Error","You logged in as guest.");
+            return;
+        }
+
         if(saveData == null) {
             Utils.showErrorDialog(view.getStage(),"Error","No saved game found.");
             return;

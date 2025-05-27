@@ -49,7 +49,9 @@ public class PauseController {
         saveAndQuitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameController.saveGame();
+                if(!App.getInstance().getCurrentUser().getUsername().equals("Guest")) {
+                    gameController.saveGame();
+                }
                 Main.getMain().setScreen(new MainMenu(new MainMenuController(),GameAssetManager.getInstance().getSkin()));
                 GameAssetManager.getInstance().playSFX("uiclick");
             }
