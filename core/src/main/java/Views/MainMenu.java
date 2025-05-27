@@ -6,6 +6,7 @@ import Models.GameAssetManager;
 import com.Final.Main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -42,7 +43,7 @@ public class MainMenu implements Screen {
         if(App.getInstance().getCurrentUser().getUsername().equals("Guest")){
             avatarImage = new Image(new Texture(Gdx.files.internal("Avatars/Avatar6.png")));
         } else {
-            avatarImage = new Image(new Texture(Gdx.files.internal("Avatars/Avatar" + App.getInstance().getCurrentUser().getAvatarIndex() + ".png")));
+            avatarImage = loadAvatarImage(App.getInstance().getCurrentUser().getAvatarIndex()) ;
         }
         // User info section
         userInfoLabel = new Label("Username: " + App.getInstance().getCurrentUser().getUsername() +
@@ -232,5 +233,22 @@ public class MainMenu implements Screen {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public static Image loadAvatarImage(String avatarIndex) {
+        // Try to load from default Avatars folder
+        FileHandle internalHandle = Gdx.files.internal("Avatars/Avatar" + avatarIndex + ".png");
+        if (internalHandle.exists()) {
+            return new Image(new Texture(internalHandle));
+        }
+
+        // If not found, try from uploadedImages folder (external)
+        FileHandle uploadedHandle = Gdx.files.local("data/uploadedImage/" + avatarIndex + ".png");
+        if (uploadedHandle.exists()) {
+            return new Image(new Texture(uploadedHandle));
+        }
+
+        // Fallback image or null if neither exists
+        return new Image(new Texture(Gdx.files.internal("Avatars/Avatar6.png")));
     }
 }

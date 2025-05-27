@@ -32,7 +32,7 @@ public class MainMenuController {
             Utils.showErrorDialog(view.getStage(),"Error","You are not logged in.");
             return;
         }
-        Main.getMain().setScreen(new ProfileMenu(new ProfileMenuController() , GameAssetManager.getInstance().getSkin()));
+        Main.getMain().setScreen(new ProfileMenu(new ProfileMenuController(Main.getFilePicker()) , GameAssetManager.getInstance().getSkin()));
     }
 
 

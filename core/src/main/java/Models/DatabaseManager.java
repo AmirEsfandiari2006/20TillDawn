@@ -17,7 +17,7 @@ public class DatabaseManager {
                     username TEXT PRIMARY KEY,
                     password TEXT NOT NULL,
                     email TEXT,
-                    avatarIndex INTEGER,
+                    avatarIndex TEXT NOT NULL,
                     score INTEGER,
                     kills INTEGER,
                     maxSurviveTime INTEGER
@@ -49,7 +49,7 @@ public class DatabaseManager {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getEmailAddress());
-            pstmt.setInt(4, user.getAvatarIndex());
+            pstmt.setString(4, user.getAvatarIndex());
             pstmt.setInt(5, user.getScore());
             pstmt.setInt(6, user.getKills());
             pstmt.setInt(7, user.getMaxSurviveTime());
@@ -72,7 +72,7 @@ public class DatabaseManager {
                     rs.getString("password"),
                     rs.getString("email")
                 );
-                user.setAvatarIndex(rs.getInt("avatarIndex"));
+                user.setAvatarIndex(rs.getString("avatarIndex"));
                 user.increaseScore(rs.getInt("score"));
                 user.increaseKills(rs.getInt("kills"));
                 user.setMaxSurviveTime(rs.getInt("maxSurviveTime"));

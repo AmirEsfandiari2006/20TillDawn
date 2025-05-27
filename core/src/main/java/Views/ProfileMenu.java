@@ -29,6 +29,7 @@ public class ProfileMenu implements Screen {
     private final TextField newPasswordField;
     private final TextButton passwordChangeButton;
     private final TextButton deleteAccountButton;
+    private final TextButton uploadAvatarButton;
     private final TextButton backButton;
 
     // Avatar buttons
@@ -66,6 +67,7 @@ public class ProfileMenu implements Screen {
             avatarTextures[i] = new Texture(Gdx.files.internal("avatars/avatar" + (i+1) + ".png"));
             avatarButtons[i] = new ImageButton(new TextureRegionDrawable(new TextureRegion(avatarTextures[i])));
         }
+        this.uploadAvatarButton = new TextButton("Upload Avatar", skin);
     }
 
     @Override
@@ -105,6 +107,8 @@ public class ProfileMenu implements Screen {
             avatarTable.add(avatarButton).size(64).pad(10);
         }
         mainTable.add(avatarTable).colspan(3).pad(20).row();
+
+        mainTable.add(uploadAvatarButton).colspan(3).pad(10).row();
 
         // Back button
         mainTable.add(backButton).colspan(3).pad(20);
@@ -172,6 +176,14 @@ public class ProfileMenu implements Screen {
                 }
             });
         }
+
+        uploadAvatarButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleCustomAvatarUpload();
+                GameAssetManager.getInstance().playSFX("uiclick");
+            }
+        });
     }
 
     @Override

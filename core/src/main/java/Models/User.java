@@ -11,7 +11,7 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String emailAddress;
-    private int avatarIndex;
+    private String avatarIndex;
 
     private int score;
     private int kills;
@@ -24,7 +24,7 @@ public class User implements Serializable {
         this.password = password;
         this.emailAddress = emailAddress;
         this.score = 0;
-        this.avatarIndex = ThreadLocalRandom.current().nextInt(1, 6);
+        this.avatarIndex = String.valueOf(ThreadLocalRandom.current().nextInt(1, 6));
     }
 
     public String getUsername() {
@@ -59,11 +59,11 @@ public class User implements Serializable {
         this.score += score;
     }
 
-    public int getAvatarIndex() {
+    public String getAvatarIndex() {
         return avatarIndex;
     }
 
-    public void setAvatarIndex(int avatarIndex) {
+    public void setAvatarIndex(String avatarIndex) {
         this.avatarIndex = avatarIndex;
     }
 

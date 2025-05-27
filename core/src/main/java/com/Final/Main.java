@@ -3,6 +3,7 @@ package com.Final;
 import Controllers.RegisterMenuController;
 import Controllers.StartMenuController;
 import Models.App;
+import Models.FilePicker;
 import Models.GameAssetManager;
 import Views.RegisterMenu;
 import Views.StartMenu;
@@ -18,12 +19,19 @@ public class Main extends Game {
 
     private static Main main;
 
+    private static FilePicker filePicker;
+
+
     private static SpriteBatch batch;
 
     public static final int WORLD_WIDTH = 1980;
     public static final int WORLD_HEIGHT = 1080;
 
     public static ShaderProgram grayscaleShader;
+
+    public Main(FilePicker picker) {
+        filePicker = picker;
+    }
 
     @Override
     public void create() {
@@ -81,6 +89,10 @@ public class Main extends Game {
 
     public static void setBatch(SpriteBatch batch) {
         Main.batch = batch;
+    }
+
+    public static FilePicker getFilePicker() {
+        return filePicker;
     }
 
 }
