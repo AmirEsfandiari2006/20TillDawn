@@ -20,13 +20,54 @@ public class GameAssetManager extends AssetManager {
     private final Map<String, Sound> soundEffects = new HashMap<>();
     private Texture redPixel;
 
-    private final Animation<Texture> character1Animation = new Animation<>(
+    private final Animation<Texture> DasherIdleAnimation = new Animation<>(
         0.1f,
-        new Texture("Characters/1/idle1.png"),
-        new Texture("Characters/1/idle2.png"),
-        new Texture("Characters/1/idle3.png"),
-        new Texture("Characters/1/idle4.png"),
-        new Texture("Characters/1/idle5.png")
+        new Texture("Characters/Dasher/idle/Idle_0.png"),
+        new Texture("Characters/Dasher/idle/Idle_1.png"),
+        new Texture("Characters/Dasher/idle/Idle_2.png"),
+        new Texture("Characters/Dasher/idle/Idle_3.png"),
+        new Texture("Characters/Dasher/idle/Idle_4.png"),
+        new Texture("Characters/Dasher/idle/Idle_5.png")
+    );
+
+    private final Animation<Texture> DiamondIdleAnimation = new Animation<>(
+        0.1f,
+        new Texture("Characters/Diamond/idle/Idle_0.png"),
+        new Texture("Characters/Diamond/idle/Idle_1.png"),
+        new Texture("Characters/Diamond/idle/Idle_2.png"),
+        new Texture("Characters/Diamond/idle/Idle_3.png"),
+        new Texture("Characters/Diamond/idle/Idle_4.png"),
+        new Texture("Characters/Diamond/idle/Idle_5.png")
+    );
+
+    private final Animation<Texture> LilithIdleAnimation = new Animation<>(
+        0.1f,
+        new Texture("Characters/Lilith/idle/Idle_0.png"),
+        new Texture("Characters/Lilith/idle/Idle_1.png"),
+        new Texture("Characters/Lilith/idle/Idle_2.png"),
+        new Texture("Characters/Lilith/idle/Idle_3.png"),
+        new Texture("Characters/Lilith/idle/Idle_4.png"),
+        new Texture("Characters/Lilith/idle/Idle_5.png")
+    );
+
+    private final Animation<Texture> ScarletIdleAnimation = new Animation<>(
+        0.1f,
+        new Texture("Characters/Scarlet/idle/Idle_0.png"),
+        new Texture("Characters/Scarlet/idle/Idle_1.png"),
+        new Texture("Characters/Scarlet/idle/Idle_2.png"),
+        new Texture("Characters/Scarlet/idle/Idle_3.png"),
+        new Texture("Characters/Scarlet/idle/Idle_4.png"),
+        new Texture("Characters/Scarlet/idle/Idle_5.png")
+    );
+
+    private final Animation<Texture> ShanaIdleAnimation = new Animation<>(
+        0.1f,
+        new Texture("Characters/Shana/idle/Idle_0.png"),
+        new Texture("Characters/Shana/idle/Idle_1.png"),
+        new Texture("Characters/Shana/idle/Idle_2.png"),
+        new Texture("Characters/Shana/idle/Idle_3.png"),
+        new Texture("Characters/Shana/idle/Idle_4.png"),
+        new Texture("Characters/Shana/idle/Idle_5.png")
     );
 
     private final Animation<Texture> treeAnimation = new Animation<>(
@@ -175,8 +216,8 @@ public class GameAssetManager extends AssetManager {
         this.skin = skin;
     }
 
-    public Animation<Texture> getCharacter1Animation() {
-        return character1Animation;
+    public Animation<Texture> getDasherIdleAnimation() {
+        return DasherIdleAnimation;
     }
 
     public Animation<Texture> getTreeAnimation() {
@@ -262,5 +303,21 @@ public class GameAssetManager extends AssetManager {
 
     public Animation<TextureRegion> getThunderAnimation() {
         return thunderAnimation;
+    }
+
+    public Animation<Texture> getDiamondIdleAnimation() {
+        return DiamondIdleAnimation;
+    }
+
+    public Animation<Texture> getLilithIdleAnimation() {
+        return LilithIdleAnimation;
+    }
+
+    public Animation<Texture> getScarletIdleAnimation() {
+        return ScarletIdleAnimation;
+    }
+
+    public Animation<Texture> getShanaIdleAnimation() {
+        return ShanaIdleAnimation;
     }
 }

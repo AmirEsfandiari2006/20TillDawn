@@ -19,8 +19,8 @@ public class Player  implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-    private transient Texture playerTexture = new Texture("Characters/1/idle1.png");
-    private transient Sprite playerSprite = new Sprite(playerTexture);
+    private transient Texture playerTexture;
+    private transient Sprite playerSprite;
 
     private transient Texture lightMask;
     private transient Sprite lightSprite;
@@ -61,10 +61,12 @@ public class Player  implements Serializable {
 
     public Player(GameController gameController,CharacterType selectedCharacter, Weapon selectedWeapon){
         this.gameController = gameController;
+        this.characterType = selectedCharacter;
+        playerTexture = characterType.getIdleAnimation().getKeyFrame(0);
+        playerSprite = new Sprite(characterType.getIdleAnimation().getKeyFrame(0));
         playerSprite.setPosition((float) Main.WORLD_WIDTH /2,(float)Main.WORLD_HEIGHT/2);
         playerSprite.setSize(playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
         this.collisionRectangle = new CollisionRectangle(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth() / 3, playerSprite.getHeight() / 3);
-        this.characterType = selectedCharacter;
         this.weapon = selectedWeapon;
         this.currentHealth = this.getFullHealth();
         initLightEffect();
@@ -295,7 +297,7 @@ public class Player  implements Serializable {
     }
 
     public void initGraphic(){
-        playerTexture = new Texture("Characters/1/idle1.png");
+        playerTexture = characterType.getIdleAnimation().getKeyFrame(0);
         playerSprite = new Sprite(playerTexture);
         initLightEffect();
     }

@@ -37,7 +37,9 @@ public class PlayerController {
     }
 
     public void idleAnimation() {
-        Animation<Texture> animation = GameAssetManager.getInstance().getCharacter1Animation();
+        Animation<Texture> animation = gameController.getSelectedCharacter().getIdleAnimation();
+
+
 
         player.getPlayerSprite().setRegion(animation.getKeyFrame(player.getTime()));
 
@@ -49,7 +51,6 @@ public class PlayerController {
 
         animation.setPlayMode(Animation.PlayMode.LOOP);
     }
-
 
     public void update() {
         updateMouseDirection();
